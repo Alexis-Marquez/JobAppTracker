@@ -13,3 +13,16 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
+    def get_headquarters_city(self):
+        return self.headquarters_location.city if self.headquarters_location else "No headquarters location set"
+
+    def has_website(self):
+        return bool(self.website)
+
+    def short_notes(self, char_limit=100):
+        if len(self.notes) > char_limit:
+            return f"{self.notes[:char_limit]}..."
+        return self.notes
+
+    def is_in_industry(self, industry_name):
+        return self.industry.lower() == industry_name.lower()

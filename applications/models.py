@@ -20,6 +20,7 @@ class Application(models.Model):
     benefits = models.TextField(blank=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     description = models.TextField()
+    last_updated = models.DateTimeField(auto_now=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     pay = models.CharField(max_length=100, blank=True)
     position_title = models.CharField(max_length=200)
