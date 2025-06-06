@@ -24,7 +24,6 @@ pipeline {
             steps {
                 echo '🧪 Running backend tests...'
                 sh 'docker compose --env-file ' + env.ENV_FILE + ' up -d db'
-                // This will now work because it uses the code inside the image
                 sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm web python manage.py test'
             }
         }
