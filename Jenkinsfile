@@ -1,13 +1,8 @@
 pipeline {
-    // Define an agent that has the Docker tools installed
-    agent {
-        docker {
-            image 'docker:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Still need the socket
-        }
-    }
+    agent any // Now 'agent any' works because the agent has the required tools
 
     environment {
+        // Using the build number ensures concurrent builds don't collide
         COMPOSE_PROJECT_NAME = "jobtracker_${env.BUILD_NUMBER}"
     }
 
@@ -21,7 +16,7 @@ pipeline {
         stage('Build Services') {
             steps {
                 echo '🐳 Building services...'
-                // Use 'docker compose' (no hyphen)
+                // Use 'docker compose' (no hyphen), which is the modern command
                 sh "docker compose build --no-cache web"
             }
         }
@@ -30,25 +25,25 @@ pipeline {
             steps {
                 echo '🧪 Running backend tests...'
                 sh "docker compose up -d db"
-                // Use 'docker compose run'
                 sh "docker compose run --rm web python manage.py test"
             }
         }
 
-        stage('Deploy Backend') {
+        stage('Deploy Application') {
             steps {
-                echo '🚀 Deploying new backend...'
-                // Use 'docker compose up'
-                sh "docker compose up -d --no-deps web"
+                echo '🚀 Deploying new versions of all services...'
+                sh "docker compose up -d --no-deps web frontend"
             }
         }
     }
 
     post {
         always {
-            echo '✅ Pipeline finished. Tearing down...'
-            // Use 'docker compose down'
-            sh "docker compose down -v --remove-orphans"
+            // This 'node' block provides the context needed to run shell commands
+            node {
+                echo '✅ Pipeline finished. Tearing down...'
+                sh "docker compose down -v --remove-orphans"
+            }
         }
     }
 }

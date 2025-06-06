@@ -35,7 +35,9 @@ services:
       - "3000:80"
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: jenkins.Dockerfile
     container_name: jobtracker_jenkins
     user: root
     ports:
@@ -43,8 +45,7 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock  # let Jenkins control Docker on host/container
-
+      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   pgdata:
   jenkins_home:
