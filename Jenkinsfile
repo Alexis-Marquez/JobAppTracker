@@ -28,7 +28,7 @@ pipeline {
 
                 // --- START DEBUGGING STEP ---
                 echo '🔍 Listing contents of the /code directory inside the container...'
-                sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm web ls -la /code'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm -v "$(pwd)/backend:/code" web python manage.py test'
                 // --- END DEBUGGING STEP ---
 
                 echo '▶️ Attempting to run tests...'
