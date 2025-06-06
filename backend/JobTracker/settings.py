@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'companies',
     'interviews',
     'locations',
-    'resumes',
-    'rest_framework'
+    'resumes'
 ]
 
 MIDDLEWARE = [
@@ -82,11 +81,12 @@ WSGI_APPLICATION = 'JobTracker.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "OPTIONS": {
-            "service": "jobtrackerdb",
-            "passfile": ".my_pgpass",
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': 'db',  # 'db' is the service name in docker-compose
+        'PORT': '5432',
     }
 }
 

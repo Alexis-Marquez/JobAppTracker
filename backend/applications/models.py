@@ -1,6 +1,6 @@
 from django.db import models
 
-from JobTracker import settings
+from django.conf import settings
 from companies.models import Company
 from locations.models import Location
 from resumes.models import Resume

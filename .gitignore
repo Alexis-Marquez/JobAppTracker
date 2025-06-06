@@ -1,3 +1,4 @@
 # PostgreSQL connection service + password files
 .pg_service.conf
 .my_pgpass
+.env
