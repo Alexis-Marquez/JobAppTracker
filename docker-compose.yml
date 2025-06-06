@@ -1,7 +1,6 @@
 services:
   db:
     image: postgres:16
-    container_name: jobtracker_db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -14,7 +13,6 @@ services:
   web:
     build:
       context: ./backend
-    container_name: jobtracker_web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/code
@@ -26,7 +24,6 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: jobtracker_frontend
     ports:
       - "3000:80"
 
@@ -34,7 +31,6 @@ services:
     build:
       context: .
       dockerfile: jenkins.Dockerfile
-    container_name: jobtracker_jenkins
     user: root
     ports:
       - "8080:8080"
