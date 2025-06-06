@@ -8,13 +8,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+    # In docker-compose.yml
   web:
     build:
       context: ./backend
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/code
     working_dir: /code
+    # The 'volumes' line is now gone
     ports:
       - "8000:8000"
     depends_on:

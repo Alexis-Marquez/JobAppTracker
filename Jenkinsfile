@@ -16,22 +16,15 @@ pipeline {
         stage('Build Services') {
             steps {
                 echo '🐳 Building services...'
-                // Use single quotes and concatenation for security
-                sh 'docker compose --env-file ' + env.ENV_FILE + ' build --no-cache web'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' build'
             }
         }
 
-       stage('Run Backend Tests') {
+        stage('Run Backend Tests') {
             steps {
                 echo '🧪 Running backend tests...'
                 sh 'docker compose --env-file ' + env.ENV_FILE + ' up -d db'
-
-                // --- START DEBUGGING STEP ---
-                echo '🔍 Listing contents of the /code directory inside the container...'
-                sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm -v "$(pwd)/backend:/code" web python manage.py test'
-                // --- END DEBUGGING STEP ---
-
-                echo '▶️ Attempting to run tests...'
+                // This will now work because it uses the code inside the image
                 sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm web python manage.py test'
             }
         }
@@ -48,7 +41,7 @@ pipeline {
         always {
             node('') {
                 echo '✅ Pipeline finished. Tearing down...'
-                sh 'docker compose --env-file ' + env.ENV_FILE + ' down -v --remove-orphans || true'
+                sh 'docker compose --env-file ' + env.ENV_HLE + ' down -v --remove-orphans || true'
             }
         }
     }
