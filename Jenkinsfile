@@ -40,7 +40,7 @@ pipeline {
     post {
         always {
             // This 'node' block provides the context needed to run shell commands
-            node {
+            node(''){
                 echo '✅ Pipeline finished. Tearing down...'
                 sh "docker compose down -v --remove-orphans"
             }
