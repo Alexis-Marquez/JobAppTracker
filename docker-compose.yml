@@ -2,8 +2,6 @@ services:
   db:
     image: postgres:16
     container_name: jobtracker_db
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,8 +20,6 @@ services:
       - ./backend:/code
     ports:
       - "8000:8000"
-    env_file:
-      - .env
     depends_on:
       - db
 
