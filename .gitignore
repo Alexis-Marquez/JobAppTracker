@@ -3,3 +3,4 @@
 .my_pgpass
 .env
 docker-compose.override.yml
+db.sqlite3

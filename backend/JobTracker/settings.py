@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -42,7 +41,8 @@ INSTALLED_APPS = [
     'companies',
     'interviews',
     'locations',
-    'resumes'
+    'resumes',
+    'django.contrib.auth'
 ]
 
 MIDDLEWARE = [
