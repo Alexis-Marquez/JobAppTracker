@@ -1,50 +1,43 @@
 services:
   db:
     image: postgres:16
-    container_name: jobtracker_db
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
+    # In docker-compose.yml
   web:
     build:
       context: ./backend
-    container_name: jobtracker_web
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/code
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
+    working_dir: /code
+    # The 'volumes' line is now gone
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
       - db
 
   frontend:
     build:
       context: ./frontend
-    container_name: jobtracker_frontend
-    ports:
-      - "3000:80"
+
 
   jenkins:
-    image: jenkins/jenkins:lts
-    container_name: jobtracker_jenkins
+    build:
+      context: .
+      dockerfile: jenkins.Dockerfile
     user: root
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock  # let Jenkins control Docker on host/container
-
+        - ./jenkins_home:/var/jenkins_home
+        - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   pgdata:
   jenkins_home:

@@ -3,41 +3,45 @@ pipeline {
 
     environment {
         COMPOSE_PROJECT_NAME = "jobtracker_${env.BUILD_NUMBER}"
+        ENV_FILE = credentials('jobtracker-env-file')
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo 'Checking out code from Jenkins job configuration...'
                 checkout scm
             }
         }
 
-        stage('Build Containers') {
+        stage('Build Services') {
             steps {
-                echo 'Building all service images...'
-                sh 'docker-compose build'
+                echo '🐳 Building services...'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' build'
             }
         }
 
-
-
         stage('Run Backend Tests') {
             steps {
-                echo 'Running backend tests in a fresh container...'
-                // Spin up the database first
-                sh 'docker-compose up -d db'
-                // Use 'run' for an isolated test environment
-                sh 'docker-compose run --rm web python manage.py test'
+                echo '🧪 Running backend tests...'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' up -d db'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' run --rm web python manage.py test'
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                echo '🚀 Deploying new versions of all services...'
+                sh 'docker compose --env-file ' + env.ENV_FILE + ' up -d --no-deps web frontend'
             }
         }
     }
 
     post {
         always {
-            echo 'Pipeline finished. Tearing down the full environment...'
-            // The -v flag removes the database volume for a completely clean run next time
-            sh 'docker-compose down -v'
+            node('') {
+                echo '✅ Pipeline finished. Tearing down...'
+                sh 'docker compose --env-file ' + env.ENV_HLE + ' down -v --remove-orphans || true'
+            }
         }
     }
 }
