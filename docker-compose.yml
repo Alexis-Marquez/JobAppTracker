@@ -15,8 +15,6 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     working_dir: /code
     # The 'volumes' line is now gone
-    ports:
-      - "8000:8000"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -27,8 +25,7 @@ services:
   frontend:
     build:
       context: ./frontend
-    ports:
-      - "3000:80"
+
 
   jenkins:
     build:
