@@ -4,7 +4,7 @@ from applications.models import Application
 from interviews.models import Interview
 
 
-class ApplicationSerializer(serializers.ModelSerializer):
+class InterviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Interview

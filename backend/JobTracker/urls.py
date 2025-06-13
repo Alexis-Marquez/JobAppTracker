@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from applications.views import ApplicationViewSet
-
 router = DefaultRouter()
-router.register(r'applications', ApplicationViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('api/', include('applications.urls')),
+    path('api/', include('companies.urls')),
+    path('api/', include('interviews.urls')),
+    path('api/', include('locations.urls')),
+    path('api/', include('resumes.urls')),
+    path('api/', include('users.urls')),
 ]
