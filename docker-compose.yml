@@ -8,13 +8,11 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-    # In docker-compose.yml
   web:
     build:
       context: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     working_dir: /code
-    # The 'volumes' line is now gone
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
