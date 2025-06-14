@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'interviews',
     'locations',
     'resumes',
-    'django.contrib.auth'
+    'django.contrib.auth',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
