@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from applications.models import Application
 from companies.models import Company
@@ -47,9 +48,18 @@ class ApplicationSerializer(serializers.ModelSerializer):
     def get_days_since_applied(self, obj):
         return obj.days_since_applied()
 
+    def validate_application_date(self, value):
+        if value > timezone.now():
+            raise serializers.ValidationError("Application date cannot be in the future.")
+        return value
+
     def create(self, validated_data):
         company_data = validated_data.pop('company_data', None)
         location_data = validated_data.pop('location_data', None)
+        application_date = validated_data.get('application_date')
+
+        if application_date and application_date > timezone.now():
+            raise serializers.ValidationError("Application date cannot be in the future.")
 
         if company_data:
             company_obj, _ = Company.objects.get_or_create(**company_data)

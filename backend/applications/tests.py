@@ -39,6 +39,28 @@ class ApplicationSerializerTests(TestCase):
         self.assertEqual(output_serializer.data['company']['name'], "OpenAI")
         self.assertEqual(output_serializer.data['location']['city'], "Austin")
 
+    def test_create_application_with_future_date(self):
+        """Test creating an application with nested company and location data"""
+        data = {
+            "application_date": (timezone.now() + timezone.timedelta(days=1)).isoformat(),
+            "position_title": "Software Engineer",
+            "description": "Exciting job",
+            "company_data": {
+                "name": "OpenAI",
+                "website": "https://openai.com"
+            },
+            "location_data": {
+                "city": "Austin",
+                "state": "TX"
+            },
+            "user": self.user.id
+        }
+
+        serializer = ApplicationSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('application_date', serializer.errors)
+
+
     def test_missing_required_fields(self):
         """Test that missing application_date makes the serializer invalid"""
         data = {
