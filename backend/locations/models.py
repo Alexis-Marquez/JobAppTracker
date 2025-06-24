@@ -33,6 +33,15 @@ class Location(models.Model):
     )
     state = models.CharField(max_length=100, blank=True)
 
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['city', 'state', 'country'],
+                name='unique_location'
+            )
+        ]
+
     def __str__(self):
         return f"{self.city}, {self.country} ({self.get_location_type_display()})"
 
