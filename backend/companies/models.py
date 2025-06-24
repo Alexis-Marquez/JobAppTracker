@@ -28,3 +28,6 @@ class Company(models.Model):
 
     def is_in_industry(self, industry_name):
         return self.industry.lower() == industry_name.lower()
+
+    def has_industry(self):
+        return bool(self.industry)
