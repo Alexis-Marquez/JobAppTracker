@@ -48,6 +48,20 @@ class ApplicationSerializer(serializers.ModelSerializer):
     def get_days_since_applied(self, obj):
         return obj.days_since_applied()
 
+    def validate_company_data(self, value):
+        if value is None or value == '':
+            raise serializers.ValidationError("Company data cannot be empty.")
+        if 'name' not in value:
+            raise serializers.ValidationError("Company name cannot be empty.")
+        return value
+
+    def validate_location_data(self, value):
+        if value is None or value == '':
+            raise serializers.ValidationError("Location data cannot be empty.")
+        if 'city' not in value:
+            raise serializers.ValidationError("Location data cannot be empty.")
+        return value
+
     def validate_application_date(self, value):
         if value > timezone.now():
             raise serializers.ValidationError("Application date cannot be in the future.")

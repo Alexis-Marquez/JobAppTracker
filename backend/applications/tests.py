@@ -73,6 +73,38 @@ class ApplicationSerializerTests(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn('application_date', serializer.errors)
 
+    def test_missing_required_fields2(self):
+        """Test that missing company_data makes the serializer invalid"""
+        data = {
+            "application_date": timezone.now().isoformat(),
+            "position_title": "Software Engineer",
+            "description": "Job description",
+            "company_data": {},
+            "user": self.user.id
+        }
+
+        serializer = ApplicationSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('company_data', serializer.errors)
+
+    def test_missing_required_fields3(self):
+        """Test that missing location_data makes the serializer invalid"""
+        data = {
+            "application_date": timezone.now().isoformat(),
+            "position_title": "Software Engineer",
+            "description": "Job description",
+            "company_data": {
+                'name': 'OpenAI'
+            },
+            "location_data": {
+            },
+            "user": self.user.id
+        }
+
+        serializer = ApplicationSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn('location_data', serializer.errors)
+
     def test_reuse_existing_company(self):
         """Test that existing company is reused instead of creating a duplicate"""
         Company.objects.create(name="OpenAI", website="https://openai.com")
