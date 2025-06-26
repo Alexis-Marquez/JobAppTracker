@@ -51,7 +51,7 @@ class Application(models.Model):
     position_title = models.CharField(max_length=200)
     resume_used = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.TextField(blank=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
     status = models.CharField(
         max_length=20,
         choices=ApplicationStatus.choices,
