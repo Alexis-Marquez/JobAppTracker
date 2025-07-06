@@ -1,5 +1,8 @@
+from django.contrib.auth import authenticate
 from django.test import TestCase
 from django.utils import timezone
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from applications.models import Application
 from applications.serializers import ApplicationSerializer
 from companies.models import Company
@@ -156,7 +159,16 @@ class ApplicationAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = CustomUser.objects.create_user(username="alex", password="pass123")
-        # self.client.force_authenticate(user=self.user)
+
+        refresh = RefreshToken.for_user(self.user)
+        self.access_token = str(refresh.access_token)
+
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
+
+    def test_requires_authentication(self):
+        unauthenticated_client = APIClient()
+        response = unauthenticated_client.get("/api/applications/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_application_via_api(self):
         """Test creating an application with nested company and location via API"""
