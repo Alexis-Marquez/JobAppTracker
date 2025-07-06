@@ -3,3 +3,4 @@ psycopg2-binary
 python-dotenv
 djangorestframework
 drf-nested-routers
+djangorestframework-simplejwt
