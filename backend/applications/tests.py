@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -8,6 +7,7 @@ from applications.serializers import ApplicationSerializer
 from companies.models import Company
 from locations.models import Location
 from users.models import CustomUser
+
 
 class ApplicationSerializerTests(TestCase):
     def setUp(self):
@@ -156,6 +156,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 class ApplicationAPITests(TestCase):
+
     def setUp(self):
         self.client = APIClient()
         self.user = CustomUser.objects.create_user(username="alex", password="pass123")
