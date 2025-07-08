@@ -12,6 +12,8 @@ from users.models import CustomUser
 class ApplicationSerializerTests(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(username="alex", password="pass123")
+        self.factory = APIRequestFactory()
+
 
     def test_create_application_with_company_and_location_data(self):
         """Test creating an application with nested company and location data"""
@@ -29,8 +31,10 @@ class ApplicationSerializerTests(TestCase):
             },
             "user": self.user.id
         }
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
 
-        serializer = ApplicationSerializer(data=data)
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertTrue(serializer.is_valid(), serializer.errors)
 
         app = serializer.save()
@@ -58,8 +62,10 @@ class ApplicationSerializerTests(TestCase):
             },
             "user": self.user.id
         }
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
 
-        serializer = ApplicationSerializer(data=data)
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertFalse(serializer.is_valid())
         self.assertIn('application_date', serializer.errors)
 
@@ -71,8 +77,10 @@ class ApplicationSerializerTests(TestCase):
             "description": "Job description",
             "user": self.user.id
         }
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
 
-        serializer = ApplicationSerializer(data=data)
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertFalse(serializer.is_valid())
         self.assertIn('application_date', serializer.errors)
 
@@ -85,8 +93,9 @@ class ApplicationSerializerTests(TestCase):
             "company_data": {},
             "user": self.user.id
         }
-
-        serializer = ApplicationSerializer(data=data)
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertFalse(serializer.is_valid())
         self.assertIn('company_data', serializer.errors)
 
@@ -103,8 +112,9 @@ class ApplicationSerializerTests(TestCase):
             },
             "user": self.user.id
         }
-
-        serializer = ApplicationSerializer(data=data)
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertFalse(serializer.is_valid())
         self.assertIn('location_data', serializer.errors)
 
@@ -123,7 +133,9 @@ class ApplicationSerializerTests(TestCase):
             "user": self.user.id
         }
 
-        serializer = ApplicationSerializer(data=data)
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
+        serializer = ApplicationSerializer(data=data,  context={'request': dummy_request})
         self.assertTrue(serializer.is_valid(), serializer.errors)
         app = serializer.save()
 
@@ -144,7 +156,10 @@ class ApplicationSerializerTests(TestCase):
             location=location
         )
 
-        serializer = ApplicationSerializer(app)
+        dummy_request = self.factory.post('/dummy-url/')
+        dummy_request.user = self.user
+
+        serializer = ApplicationSerializer(app, context={'request': dummy_request})
         data = serializer.data
 
         self.assertEqual(data['company']['name'], "OpenAI")
@@ -152,7 +167,7 @@ class ApplicationSerializerTests(TestCase):
         self.assertTrue(data['is_active'])
         self.assertEqual(data['days_since_applied'], 0)
 
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APIRequestFactory
 from rest_framework import status
 
 class ApplicationAPITests(TestCase):
@@ -184,8 +199,7 @@ class ApplicationAPITests(TestCase):
             "location_data": {
                 "city": "Austin",
                 "state": "TX"
-            },
-            "user": self.user.id
+            }
         }
 
         response = self.client.post("/api/applications/", data, format="json")
@@ -200,8 +214,7 @@ class ApplicationAPITests(TestCase):
         """Test API rejects incomplete application data"""
         data = {
             "position_title": "Software Engineer",
-            "description": "Only partial info",
-            "user": self.user.id
+            "description": "Only partial info"
         }
 
         response = self.client.post("/api/applications/", data, format="json")
