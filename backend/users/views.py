@@ -45,7 +45,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 key="refresh_token",
                 value=refresh_token,
                 httponly=True,
-                secure=True,   # True in production with HTTPS
+                secure=False,   # True in production with HTTPS
                 samesite='Lax',
                 path='/api/token/refresh/'
             )
