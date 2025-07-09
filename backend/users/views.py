@@ -8,7 +8,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
-
+    pagination_class = None
     def get_queryset(self):
         return CustomUser.objects.filter(id=self.request.user.id)
 

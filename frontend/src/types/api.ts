@@ -32,36 +32,9 @@ export type Application = {
     requirements?: string;
 };
 
-export type GetApplication = {
-    id: number;
-    position_title: string;
-    company: {
-        name: string;
-        website: string;
-    };
-    location: {
-        id: number;
-        city: string;
-        country: string;
-        location_type: 'onsite' | 'remote' | 'hybrid';
-        state: string;
-    };
-    resume_used: unknown;
-    user: number;
-    is_active: boolean;
-    days_since_applied: number;
-    application_date: string; // ISO date string
-    benefits: string;
-    description: string;
-    last_updated: string;
-    pay: string;
-    requirements: string;
-    status: 'applied' | 'interview' | 'offer' | 'rejected';
-};
-
 export type GetApplicationsResponse = {
     count: number;
     next: string | null;
     previous: string | null;
-    results: GetApplication[];
+    results: Application[];
 };
