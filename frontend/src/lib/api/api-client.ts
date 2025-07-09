@@ -1,7 +1,7 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios';
 
 import { env } from '@/config/env';
-import {paths} from "@/config/paths.ts";
+import {paths} from "@/config/paths";
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
     if (config.headers) {

@@ -1,8 +1,9 @@
 import { z } from 'zod';
-import {api} from "@/lib/api/api-client.ts";
+import {api} from "@/lib/api/api-client";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import { MutationConfig } from '@/lib/react-query';
-import {getApplicationsQueryOptions} from "@/features/applications/api/get_applications.ts";
+import {getApplicationsQueryOptions} from "@/features/applications/api/get_applications";
+import {Application} from "@/types/api";
 export const createApplicationInputSchema = z.object({
     position_title: z.string().min(1, "Position is required"),
     company_data: z.object({company_name: z.string().min(1, "CompanyName is required"), company_website: z.union([z.literal(""), z.string().url()]).optional()}),
@@ -13,11 +14,9 @@ export const createApplicationInputSchema = z.object({
 });
 export type CreateApplicationInput = z.infer<typeof createApplicationInputSchema>;
 
-export const createApplication = ({
-                                  data,
-                              }: {
+export const createApplication = ({data,}: {
     data: CreateApplicationInput;
-}): Promise<Comment> => {
+}): Promise<Application> => {
     return api.post('/api/applications', data);
 };
 
