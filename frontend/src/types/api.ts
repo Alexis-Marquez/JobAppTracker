@@ -5,19 +5,63 @@ export type BaseEntity = {
 
 export type Entity<T> = T & BaseEntity;
 
-export type Application = Entity<{
+export type Application = {
+    id: number;
     position_title: string;
-    company_data: {
-        company_name: string;
-        company_website?: string;
+    company: {
+        name: string;
+        website?: string;
     };
-    location_data: {
+    location: {
+        id: number;
         city: string;
         state?: string;
         country?: string;
-        location_type: 'ONSITE' | 'REMOTE' | 'HYBRID';
+        location_type: 'onsite' | 'remote' | 'hybrid';
     };
-    application_date: Date;
+    application_date: string;
     status?: 'applied' | 'interview' | 'offer' | 'rejected';
     description?: string;
-}>;
+    benefits?: string;
+    resume_used?: any;
+    user?: number;
+    is_active?: boolean;
+    days_since_applied?: number;
+    last_updated?: string;
+    pay?: string;
+    requirements?: string;
+};
+
+export type GetApplication = {
+    id: number;
+    position_title: string;
+    company: {
+        name: string;
+        website: string;
+    };
+    location: {
+        id: number;
+        city: string;
+        country: string;
+        location_type: 'onsite' | 'remote' | 'hybrid';
+        state: string;
+    };
+    resume_used: unknown;
+    user: number;
+    is_active: boolean;
+    days_since_applied: number;
+    application_date: string; // ISO date string
+    benefits: string;
+    description: string;
+    last_updated: string;
+    pay: string;
+    requirements: string;
+    status: 'applied' | 'interview' | 'offer' | 'rejected';
+};
+
+export type GetApplicationsResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: GetApplication[];
+};
