@@ -58,6 +58,9 @@ class Application(models.Model):
         default=ApplicationStatus.APPLIED
     )
 
+    class Meta:
+        ordering = ['-application_date']
+
     def __str__(self):
         return f"{self.position_title} at {self.company} ({self.status})"
 

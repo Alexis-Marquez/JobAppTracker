@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.utils import timezone
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -237,6 +237,7 @@ class ApplicationAPITests(TestCase):
 
         response = self.client.get("/api/applications/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['company']['name'], "OpenAI")
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['company']['name'], "OpenAI")
+
 
