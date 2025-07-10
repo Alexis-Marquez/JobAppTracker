@@ -1,6 +1,5 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios';
 
-import { env } from '@/config/env';
 import {paths} from "@/config/paths";
 import { refreshToken} from "@/lib/auth";
 
@@ -15,12 +14,14 @@ function authRequestInterceptor(config: InternalAxiosRequestConfig) {
     return config;
 }
 
+
 export const api = Axios.create({
-    baseURL: env.API_URL,
+    // @ts-ignore
+    baseURL: import.meta.env.VITE_API_URL
 });
 
 export const apiLogout = async ()=>{
-    await api.post('logout')
+    await api.post('logout/')
 }
 
 
@@ -39,23 +40,24 @@ api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
                 const refreshResponse = await refreshToken();
-                const newAccessToken = refreshResponse.data.access;
+                console.log(refreshResponse);
+                const newAccessToken = refreshResponse.access;
 
                 sessionStorage.setItem('accessToken', newAccessToken);
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
                 return api(originalRequest);
             } catch (refreshError) {
+                console.error(refreshError);
                 // If refresh fails force logout
                 await apiLogout();
                 sessionStorage.removeItem('accessToken');
-                window.location.href = '/login';
+                window.location.href = '/login/';
                 return Promise.reject(refreshError);
             }
         }
@@ -75,14 +77,6 @@ api.interceptors.response.use(
         //     title: 'Error',
         //     message,
         // });
-
-        if (error.response?.status === 401) {
-            const searchParams = new URLSearchParams();
-            const redirectTo =
-                searchParams.get('redirectTo') || window.location.pathname;
-                window.location.href = paths.auth.login.getHref(redirectTo);
-        }
-
         return Promise.reject(error);
     },
 );

@@ -22,6 +22,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from users.views import health_check
+
 router = DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +33,5 @@ urlpatterns = [
     path('api/', include('locations.urls')),
     path('api/', include('resumes.urls')),
     path('api/', include('users.urls')),
+    path('api/healthz/', health_check, name='health_check'),
 ]

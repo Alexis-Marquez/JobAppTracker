@@ -4,3 +4,5 @@ python-dotenv
 djangorestframework
 drf-nested-routers
 djangorestframework-simplejwt
+django-cors-headers
+gunicorn

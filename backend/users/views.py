@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -87,3 +88,8 @@ class LogoutView(APIView):
 
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+def health_check(request):
+    """A simple view that returns a 200 OK response."""
+    return HttpResponse(status=200)

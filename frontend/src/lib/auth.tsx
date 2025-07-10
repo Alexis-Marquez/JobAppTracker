@@ -3,7 +3,7 @@ import {AuthContextType, AuthResponse, User} from "@/types/api";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 
 const getUser = async (): Promise<User> => {
-    const response = await api.get('/users');
+    const response = await api.get('/users/');
 
     return response.data;
 };
@@ -20,7 +20,7 @@ export const refreshToken = () => {
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
-    return api.post('/token', data);
+    return api.post('/token/', data);
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -54,6 +54,7 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
         onError: () => {
             setUser(null);
         },
+        retry: false,
     })
 
     const { isLoading } = useQuery(initialCallOptions());
@@ -83,7 +84,7 @@ export const ProtectedRoute = ({ children }: AuthProviderProps) => {
 
     if (!user) {
         // If not authenticated, redirect to login page
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login/" replace />;
     }
     // If authenticated, render the child route component
     return children;
