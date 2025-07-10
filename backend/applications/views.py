@@ -12,7 +12,12 @@ class ApplicationViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
-        return Application.objects.filter(user=self.request.user)
+        queryset = Application.objects.filter(user=self.request.user)
+
+        status = self.request.query_params.get('status')
+        if status:
+            queryset = queryset.filter(status=status)
+        return queryset
 
 
 # Post: {"id":1,"company":{"name":"OpenAI","website":"https://openai.com"},

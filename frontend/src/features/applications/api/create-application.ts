@@ -23,7 +23,7 @@ export const useCreateApplication = () => {
     return useMutation({
         mutationFn: (data: CreateApplicationInput) => createApplication(data),
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: getApplicationsQueryOptions().queryKey}).then(r => (console.log(r)));
+            queryClient.invalidateQueries({queryKey: ['applications']}).then(r => (console.log(r)));
         }
     });
 };

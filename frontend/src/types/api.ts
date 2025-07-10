@@ -38,3 +38,18 @@ export type GetApplicationsResponse = {
     previous: string | null;
     results: Application[];
 };
+
+export type User = {
+    id: string;
+    username: string;
+}
+
+export type AuthContextType = {
+    user: User | null;
+    setUser: (user: User | null) => void;
+    logout: () => Promise<void>;
+};
+
+export type AuthResponse = {
+    jwt: string;
+};
