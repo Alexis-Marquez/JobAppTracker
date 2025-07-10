@@ -12,14 +12,14 @@ function App() {
     const queryClient = new QueryClient()
     return (
         <QueryClientProvider client={queryClient}>
-            <AuthProvider>
             <BrowserRouter>
+                <AuthProvider>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                 </Routes>
+                </AuthProvider>
                 </BrowserRouter>
-            </AuthProvider>
         </QueryClientProvider>
     )
 }

@@ -1,4 +1,4 @@
-import {useState, useContext, createContext, ReactNode, SetStateAction} from "react";
+import {useState, useContext, createContext, ReactNode} from "react";
 import {AuthContextType, AuthResponse, User} from "@/types/api";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 
@@ -18,7 +18,6 @@ export const refreshToken = () => {
     return api.post('/token/refresh/', null, {
         headers: {
             Authorization: undefined,
-            skipAuthRefresh: true,
         },
     });
 };
@@ -49,10 +48,11 @@ type ProtectedRouteProps = {
 export const AuthProvider = ({children}: ProtectedRouteProps) => {
     const [user, setUser] = useState<User | null>(null);
     const queryClient = useQueryClient();
-
+    const location = useLocation();
     const initialCallOptions = ()=>({
         queryKey: ["currentUser"],
         queryFn: getUser,
+        enabled: location.pathname !== '/login/',
         onSuccess: (response: User) => {
             setUser(response);
         },
@@ -78,7 +78,7 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
     );
 };
 
-import { Navigate } from "react-router";
+import {Navigate, useLocation} from "react-router";
 import {api, apiLogout} from "@/lib/api/api-client";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
