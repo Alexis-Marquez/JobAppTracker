@@ -15,7 +15,12 @@ export const loginInputSchema = z.object({
 
 
 export const refreshToken = () => {
-    return api.post('/token/refresh/');
+    return api.post('/token/refresh/', null, {
+        headers: {
+            Authorization: undefined,
+            skipAuthRefresh: true,
+        },
+    });
 };
 
 export type LoginInput = z.infer<typeof loginInputSchema>;

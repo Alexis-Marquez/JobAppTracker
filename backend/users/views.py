@@ -50,8 +50,6 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 samesite='Lax',
                 path='/api/token/refresh/'
             )
-
-        # Optionally remove refresh token from response data
         response.data.pop("refresh", None)
 
         return response

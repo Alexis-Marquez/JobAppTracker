@@ -2,6 +2,7 @@ import Axios, { InternalAxiosRequestConfig } from 'axios';
 
 import {paths} from "@/config/paths";
 import { refreshToken} from "@/lib/auth";
+import {useNavigate} from "react-router";
 
 
 
@@ -19,7 +20,7 @@ export const api = Axios.create({
     // @ts-ignore
     baseURL: import.meta.env.VITE_API_URL
 });
-
+api.interceptors.request.use(authRequestInterceptor);
 export const apiLogout = async ()=>{
     await api.post('logout/')
 }
@@ -34,28 +35,28 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-api.interceptors.request.use(authRequestInterceptor);
+
 
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        console.log(error.config);
+        if (error.response?.status === 401 && !originalRequest._retry&& !originalRequest.skipAuthRefresh) {
             originalRequest._retry = true;
-
+            sessionStorage.removeItem('accessToken');
             try {
                 const refreshResponse = await refreshToken();
-                console.log(refreshResponse);
                 const newAccessToken = refreshResponse.access;
-
+                console.log(newAccessToken);
                 sessionStorage.setItem('accessToken', newAccessToken);
-                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-                return api(originalRequest);
+                // return api(originalRequest);
             } catch (refreshError) {
                 console.error(refreshError);
                 // If refresh fails force logout
-                await apiLogout();
+                // await apiLogout();
                 sessionStorage.removeItem('accessToken');
                 window.location.href = '/login/';
                 return Promise.reject(refreshError);
