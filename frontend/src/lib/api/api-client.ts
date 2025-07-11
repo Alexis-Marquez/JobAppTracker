@@ -3,6 +3,7 @@ import Axios, {AxiosError, InternalAxiosRequestConfig} from 'axios';
 import {paths} from "@/config/paths";
 import { refreshToken} from "@/lib/auth";
 import {useNavigate} from "react-router";
+import {RefreshTokenResponse} from "@/types/api";
 
 
 export const api = Axios.create({
@@ -43,7 +44,7 @@ api.interceptors.response.use(
             sessionStorage.removeItem('accessToken');
             console.log(originalRequest);
             try {
-                const refreshResponse = await refreshToken();
+                const refreshResponse:RefreshTokenResponse = await refreshToken();
                 const newAccessToken = refreshResponse.access;
                 sessionStorage.setItem('accessToken', newAccessToken);
 

@@ -40,16 +40,22 @@ export type GetApplicationsResponse = {
 };
 
 export type User = {
-    id: string;
+    email: string;
+    first_name: string;
+    id: string
+    last_name: string;
     username: string;
 }
 
 export type AuthContextType = {
     user: User | null;
-    setUser: (user: User | null) => void;
     logout: () => Promise<void>;
 };
 
 export type AuthResponse = {
-    jwt: string;
+    access: string;
+};
+
+export type RefreshTokenResponse = {
+    access: string;
 };
