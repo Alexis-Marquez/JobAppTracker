@@ -4,7 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 
 
 export const getApplications = async (filters: { status?: string; page?: number }) => {
-    return api.get<GetApplicationsResponse>('/api/applications', {
+    return api.get<GetApplicationsResponse>('/applications', {
         params: filters,
     });
 };

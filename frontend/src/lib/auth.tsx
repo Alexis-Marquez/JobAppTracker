@@ -5,8 +5,7 @@ import {RefreshTokenResponse} from "@/types/api"
 
 const getUser = async (): Promise<User> => {
     const response = await api.get('/users/');
-
-    return response.data[1];
+    return response.data;
 };
 
 export const loginInputSchema = z.object({
@@ -36,7 +35,9 @@ export const useLoginWithUsernameAndPassword = () => {
         mutationKey: ['currentUser'],
         onSuccess: (data) => {
             sessionStorage.setItem('accessToken', data.access);
-            queryClient.invalidateQueries({queryKey: ['currentUser']});
+            queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+            queryClient.invalidateQueries({ queryKey: ['applications'] });
+            window.location.href = '/';
         }
     });
 }
@@ -68,6 +69,7 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
         queryFn: getUser,
         enabled: location.pathname !== "/login/",
         retry: false,
+        staleTime: 30 * 60 * 1000,
     });
 
     const logout = async () => {
@@ -76,7 +78,8 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
         queryClient.invalidateQueries({ queryKey: ["currentUser"] });
         queryClient.clear();
     };
-    const user = data ?? null;
+    const user: User | null = data ?? null;
+
     return (
         <AuthContext.Provider value={{user, logout }}>
             {isLoading ? <FullScreenLoader /> : children}
@@ -84,11 +87,10 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
     );
 };
 
-import {data, Navigate, useLocation} from "react-router";
+import {Navigate, useLocation} from "react-router";
 import {api, apiLogout} from "@/lib/api/api-client";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
-import {AxiosResponse} from "axios";
 
 
 export const ProtectedRoute = ({ children }: AuthProviderProps) => {

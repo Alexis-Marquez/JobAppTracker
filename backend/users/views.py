@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from rest_framework import viewsets
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser
@@ -10,8 +11,15 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = None
+
     def get_queryset(self):
         return CustomUser.objects.filter(id=self.request.user.id)
+
+    def list(self, request, *args, **kwargs):
+        # Override list to return single object, not list
+        user = self.get_queryset().first()
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
 
 
 from rest_framework import generics
@@ -72,14 +80,17 @@ class CookieTokenRefreshView(APIView):
             return Response({"detail": "Invalid refresh token."}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         try:
             refresh_token = request.COOKIES.get('refresh_token')
 
             if refresh_token:
-                token = RefreshToken(refresh_token)
-                token.blacklist()
-
+                try:
+                    token = RefreshToken(refresh_token)
+                    token.blacklist()
+                except Exception:
+                    pass
             response = Response({"detail": "Logged out successfully."}, status=status.HTTP_200_OK)
             response.delete_cookie('refresh_token')
             return response

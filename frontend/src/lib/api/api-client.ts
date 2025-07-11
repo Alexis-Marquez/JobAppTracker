@@ -4,7 +4,9 @@ import {paths} from "@/config/paths";
 import { refreshToken} from "@/lib/auth";
 import {useNavigate} from "react-router";
 import {RefreshTokenResponse} from "@/types/api";
-
+import {queryConfig} from "@/lib/react-query";
+import {useQueryClient} from "@tanstack/react-query";
+import { queryClient } from "@/lib/react-query-client";
 
 export const api = Axios.create({
     // @ts-ignore
@@ -39,6 +41,7 @@ api.interceptors.response.use(
             if (error.request?.responseURL?.includes('/token/refresh/')) {
                 return Promise.reject(error);
             }
+
             console.log(error.request?.responseURL);
             originalRequest._retry = true;
             sessionStorage.removeItem('accessToken');
@@ -47,11 +50,14 @@ api.interceptors.response.use(
                 const refreshResponse:RefreshTokenResponse = await refreshToken();
                 const newAccessToken = refreshResponse.access;
                 sessionStorage.setItem('accessToken', newAccessToken);
-
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                return api(originalRequest);
+                const result = await api(originalRequest);
+                await queryClient.refetchQueries({ queryKey: ["applications"] });
+
+                return result;
 
             } catch (refreshError: any) {
+                await apiLogout();
                 sessionStorage.removeItem('accessToken');
                 window.location.href = '/login/';
                 return Promise.reject(refreshError);
