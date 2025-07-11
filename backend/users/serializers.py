@@ -5,11 +5,26 @@ from users.models import CustomUser
 
 
 class UserSerializer(serializers.ModelSerializer):
-    applications = serializers.PrimaryKeyRelatedField(many=True, queryset=Application.objects.all())
     class Meta:
         model = CustomUser
-        fields = '__all__'
-        # fields = ['id', 'application_date', 'benefits', ..., 'is_active', 'days_since_applied']
+        fields = ['username', 'id', 'first_name', 'last_name', 'email']
+        # fields = [applications
+        # date_joined
+        # default_resume
+        # email
+        # first_name
+        # groups
+        # id
+        # is_active
+        # is_staff
+        # is_superuser
+        # last_login
+        # last_name
+        # notify_on_deadlines
+        # password
+        # preferred_timezone
+        # user_permissions
+        # username]
 from rest_framework import serializers
 from users.models import CustomUser
 
