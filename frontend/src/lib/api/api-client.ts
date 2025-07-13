@@ -52,7 +52,7 @@ api.interceptors.response.use(
                 sessionStorage.setItem('accessToken', newAccessToken);
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                 const result = await api(originalRequest);
-                await queryClient.refetchQueries({ queryKey: ["applications"] });
+                await queryClient.refetchQueries({ type: "active" });
 
                 return result;
 
