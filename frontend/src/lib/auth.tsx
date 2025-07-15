@@ -9,8 +9,8 @@ const getUser = async (): Promise<User> => {
 };
 
 export const loginInputSchema = z.object({
-    username: z.string().min(1, 'Required'),
-    password: z.string().min(1, 'Required'),
+    username: z.string().min(1, 'Username is Required'),
+    password: z.string().min(1, 'Password is Required'),
 });
 
 

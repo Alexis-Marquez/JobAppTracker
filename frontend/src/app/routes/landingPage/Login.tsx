@@ -23,6 +23,9 @@ export function Login() {
             onSuccess: () => {
                 reset();
             },
+            onError: () => {
+                reset();
+            }
         });
     };
     return (
@@ -33,13 +36,13 @@ export function Login() {
             <div className="log-in-form-section">
                 <label className="log-in-label" htmlFor="username">Username</label>
                 <input type="text" {...register("username")} className="log-in-input" id='username'/>
-                {errors.username && <p className="text-red-500">{errors.username.message}</p>}
+                {errors.username && <p className="log-in-error">{errors.username.message}</p>}
             </div>
 
             <div className="log-in-form-section">
                 <label className="log-in-label" htmlFor="password">Password</label>
                 <input type="password" {...register("password")} className="log-in-input" id="password" />
-                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+                {errors.password && <p className="log-in-error">{errors.password.message}</p>}
             </div>
             <div className="log-in-form-section">
             <button type="submit" disabled={isPending} className="log-in-button">

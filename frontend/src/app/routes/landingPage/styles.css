@@ -15,6 +15,9 @@
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
+.log-in-error{
+    color: var(--color-danger);
+}
 .log-in-form-section{
     display: flex;
     flex-direction: column;

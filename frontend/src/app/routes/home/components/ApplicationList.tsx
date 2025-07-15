@@ -19,7 +19,21 @@ export const ApplicationList= ()=>{
 
     return (
         <div className="Application-list-container">
-            <h2 className="Application-list-title">Job Applications</h2>
+            <h2 className="Application-list-title"> <div className="filter-selector">
+                <select
+                    value={filters.status || ""}
+                    onChange={(e) =>
+                        setFilters((prev) => ({ ...prev, status: e.target.value || undefined, page: 1 }))
+                    }
+                    className="filter-selector-select"
+                >
+                    <option value="">All Job Applications</option>
+                    <option value="applied">All Applied</option>
+                    <option value="interview">All Application Currently Interviewing</option>
+                    <option value="offer">Applications With Offers</option>
+                    <option value="rejected">Rejected Applications</option>
+                </select>
+            </div></h2>
             <ul className="application-list">
                 {data?.results.map((app:Application) => (
                     <li key={app.id} className="application-list-item">
@@ -38,22 +52,6 @@ export const ApplicationList= ()=>{
                     </li>
                 ))}
             </ul>
-
-            <div className="filter-selector">
-                <select
-                    value={filters.status || ""}
-                    onChange={(e) =>
-                        setFilters((prev) => ({ ...prev, status: e.target.value || undefined, page: 1 }))
-                    }
-                    className="filter-selector-select"
-                >
-                    <option value="">All</option>
-                    <option value="applied">Applied</option>
-                    <option value="interview">Interview</option>
-                    <option value="offer">Offer</option>
-                    <option value="rejected">Rejected</option>
-                </select>
-
                 <PaginationControls
                     next={data?.next || null}
                     previous={data?.previous || null}
@@ -62,7 +60,6 @@ export const ApplicationList= ()=>{
                         setFilters((prev) => ({ ...prev, page: newPage }))
                     }
                 />
-            </div>
 
             <p className="page-indicator">Page: {filters.page}</p>
         </div>
