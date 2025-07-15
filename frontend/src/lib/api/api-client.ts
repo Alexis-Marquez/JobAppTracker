@@ -1,11 +1,7 @@
-import Axios, {AxiosError, InternalAxiosRequestConfig} from 'axios';
+import Axios from 'axios';
 
-import {paths} from "@/config/paths";
 import { refreshToken} from "@/lib/auth";
-import {useNavigate} from "react-router";
 import {RefreshTokenResponse} from "@/types/api";
-import {queryConfig} from "@/lib/react-query";
-import {useQueryClient} from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query-client";
 
 export const api = Axios.create({
@@ -38,7 +34,7 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         if (error.response?.status === 401 && !originalRequest._retry) {
-            if (error.request?.responseURL?.includes('/token/refresh/')) {
+            if (error.request?.responseURL?.includes('/token/refresh/') || error.request?.responseURL?.includes('/token')) {
                 return Promise.reject(error);
             }
 
@@ -71,12 +67,6 @@ api.interceptors.response.use(
         return response.data;
     },
     (error: { response: { data: { message: string; }; status: number; }; message: string; }) => {
-        const message = error.response?.data?.message || error.message;
-        // useNotifications.getState().addNotification({
-        //     type: 'error',
-        //     title: 'Error',
-        //     message,
-        // });
         return Promise.reject(error);
     },
 );

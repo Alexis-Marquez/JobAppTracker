@@ -22,9 +22,6 @@ export function Login() {
         login(data, {
             onSuccess: () => {
                 reset();
-            },
-            onError: () => {
-                reset();
             }
         });
     };
@@ -44,6 +41,10 @@ export function Login() {
                 <input type="password" {...register("password")} className="log-in-input" id="password" />
                 {errors.password && <p className="log-in-error">{errors.password.message}</p>}
             </div>
+            {error && (
+                <p className="log-in-error">
+                    {error.response?.data?.message || "Invalid username or password."}
+                </p>)}
             <div className="log-in-form-section">
             <button type="submit" disabled={isPending} className="log-in-button">
                 {isPending ? "Submitting..." : "Log in"}

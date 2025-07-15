@@ -1,4 +1,4 @@
-import {useState, useContext, createContext, ReactNode, SetStateAction} from "react";
+import {useContext, createContext, ReactNode} from "react";
 import {AuthContextType, AuthResponse, User} from "@/types/api";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {RefreshTokenResponse} from "@/types/api"
