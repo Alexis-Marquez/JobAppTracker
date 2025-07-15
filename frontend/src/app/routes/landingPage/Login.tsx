@@ -1,6 +1,7 @@
 import {LoginInput, loginInputSchema, useLoginWithUsernameAndPassword} from "@/lib/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import "./styles.css"
 
 export function Login() {
     const { mutate: login, isPending, isSuccess, error } = useLoginWithUsernameAndPassword();
@@ -25,21 +26,27 @@ export function Login() {
         });
     };
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-xl mx-auto p-4">
-            <div>
-                <label>Username</label>
-                <input type="text" {...register("username")} className="border p-2 w-full" />
+        <form onSubmit={handleSubmit(onSubmit)} className="log-in-form">
+            <div className="log-in-form-section">
+            <h2 className="title">Login</h2>
+            </div>
+            <div className="log-in-form-section">
+                <label className="log-in-label" htmlFor="username">Username</label>
+                <input type="text" {...register("username")} className="log-in-input" id='username'/>
                 {errors.username && <p className="text-red-500">{errors.username.message}</p>}
             </div>
 
-            <div>
-                <label>Password</label>
-                <input type="password" {...register("password")} className="border p-2 w-full" />
+            <div className="log-in-form-section">
+                <label className="log-in-label" htmlFor="password">Password</label>
+                <input type="password" {...register("password")} className="log-in-input" id="password" />
                 {errors.password && <p className="text-red-500">{errors.password.message}</p>}
             </div>
-            <button type="submit" disabled={isPending} className="bg-blue-600 text-white py-2 px-4 rounded">
+            <div className="log-in-form-section">
+            <button type="submit" disabled={isPending} className="log-in-button">
                 {isPending ? "Submitting..." : "Log in"}
             </button>
+                <p className="sub-title">Don't have an account? <a>register</a></p>
+            </div>
         </form>
             )
 }
