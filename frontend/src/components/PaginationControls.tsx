@@ -20,9 +20,6 @@ export default function PaginationControls({
             >
                 Prev
             </button>
-
-            <span className="page-indicator">Page: {page}</span>
-
             <button
                 onClick={() => onPageChange(page + 1)}
                 disabled={next === null}

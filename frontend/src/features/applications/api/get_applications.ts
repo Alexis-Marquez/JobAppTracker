@@ -12,6 +12,7 @@ export const getApplications = async (filters: { status?: string; page?: number 
 export const getApplicationsQueryOptions = (filters: { status?: string; page?: number }) => ({
     queryKey: ['applications', filters],
     queryFn: () => getApplications(filters),
+    retry: true,
 });
 
 export const useApplicationsQuery = (filters: { status?: string; page?: number }) => {

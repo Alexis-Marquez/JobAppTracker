@@ -21,7 +21,6 @@ export function Login() {
         login(data, {
             onSuccess: () => {
                 reset();
-                alert("Logged in!");
             },
         });
     };

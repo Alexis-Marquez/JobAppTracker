@@ -1,6 +1,43 @@
 .filter-selector{
     display: flex;
+    flex-direction: column;
 }
-.filter-selector-select{
-
+.application-list{
+    width: 100%;
+}
+.application-position-title{
+    font-size: xx-large;
+}
+.application-company-name{
+    font-size: large;
+}
+.application-list-item{
+    display: flex;
+    list-style: none;
+}
+.Application-list-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50vw;
+}
+.application-list-item-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.application-list-item-card{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    background: var(--color-white);
+    border-radius: 10px;
+    color: var(--color-primary-dark);
+}
+.landing-page{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

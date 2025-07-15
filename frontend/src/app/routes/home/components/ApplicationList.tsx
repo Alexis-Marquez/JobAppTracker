@@ -18,8 +18,26 @@ export const ApplicationList= ()=>{
     if (isError) return <p>Failed to load applications.</p>;
 
     return (
-        <div className="space-y-4 max-w-2xl mx-auto p-4">
-            <h2 className="text-xl font-semibold">Job Applications</h2>
+        <div className="Application-list-container">
+            <h2 className="Application-list-title">Job Applications</h2>
+            <ul className="application-list">
+                {data?.results.map((app:Application) => (
+                    <li key={app.id} className="application-list-item">
+                        <div className="application-list-item-card">
+                            <section className="application-list-item-section">
+                        <div className="application-status">Status: {app.status}</div>
+                                <div className="application-days-since">Applied 16 days ago</div>
+
+                            </section>
+                            <section className="application-list-item-section">
+                                <div className="application-position-title">{app.position_title}</div>
+                                <div className="application-company-name">{app.company.name}</div>
+                                <div className="application-location">{app.location.location_type}</div>
+                            </section>
+                        </div>
+                    </li>
+                ))}
+            </ul>
 
             <div className="filter-selector">
                 <select
@@ -45,17 +63,6 @@ export const ApplicationList= ()=>{
                     }
                 />
             </div>
-
-
-            <ul className="application-list">
-                {data?.results.map((app:Application) => (
-                    <li key={app.id} className="application-list-item">
-                        <div className="application-position-title">{app.position_title}</div>
-                        <div className="application-company-name">{app.company.name}</div>
-                        <div className="application-status">Status: {app.status}</div>
-                    </li>
-                ))}
-            </ul>
 
             <p className="page-indicator">Page: {filters.page}</p>
         </div>
