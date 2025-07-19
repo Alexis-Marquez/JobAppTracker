@@ -4,6 +4,7 @@ import {Application} from "@/types/api";
 import "../styles.css"
 import FullScreenLoader from "@/components/FullScreenLoader";
 import PaginationControls from "@/components/PaginationControls";
+import {AddApplicationSection} from "@/app/routes/home/components/AddApplicationSection";
 
 export const ApplicationList= ()=>{
 
@@ -15,7 +16,6 @@ export const ApplicationList= ()=>{
     const { data, isLoading, isError } = useApplicationsQuery(filters);
 
     if (isLoading) return <FullScreenLoader></FullScreenLoader>;
-    if (isError) return <p>Failed to load applications.</p>;
 
     return (
         <div className="Application-list-container">
@@ -34,6 +34,7 @@ export const ApplicationList= ()=>{
                     <option value="rejected">Rejected Applications</option>
                 </select>
             </div></h2>
+            <AddApplicationSection></AddApplicationSection>
             <ul className="application-list">
                 {data?.results.map((app:Application) => (
                     <li key={app.id} className="application-list-item">

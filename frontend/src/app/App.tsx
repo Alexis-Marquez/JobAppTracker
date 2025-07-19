@@ -7,6 +7,7 @@ import {Home} from "@/app/routes/home/Home";
 import {LandingPage} from "@/app/routes/landingPage/LandingPage";
 import { queryClient } from "@/lib/react-query-client";
 import {BackgroundParticles} from "@/components/BackgroundParticles";
+import {CreateApplicationPage} from "@/app/routes/createApplication/CreateApplicationPage";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<LandingPage />} />
+                    <Route path="/create" element={<CreateApplicationPage/>}/>
                 </Routes>
                 </AuthProvider>
                 </BrowserRouter>

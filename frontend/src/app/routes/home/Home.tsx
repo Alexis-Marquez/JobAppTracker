@@ -8,7 +8,7 @@ import {BackgroundParticles} from "@/components/BackgroundParticles";
 
 export const Home = () => {
     return (
-        <div className="landing-page">
+        <div className="container-page">
         <ApplicationList></ApplicationList>
         </div>
     )
