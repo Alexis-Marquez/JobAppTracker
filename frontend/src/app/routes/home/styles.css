@@ -10,7 +10,7 @@
 .Application-list-title {
     margin-bottom: 1rem;
     color: var(--color-primary);
-    font-size: clamp(1rem, 1vw, 1.5rem);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -81,7 +81,7 @@
 }
 
 .application-company-name {
-    font-size: clamp(0.75rem,1vw,1.25rem);
+    font-size: clamp(1rem, 2vw, 1.5rem);
     color: var(--color-primary);
 }
 
@@ -113,7 +113,7 @@
     align-items: center;
 }
 
-.button{
-
+.detailed-view{
+    background: transparent;
 }
 

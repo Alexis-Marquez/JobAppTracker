@@ -5,6 +5,8 @@ import "../styles.css"
 import FullScreenLoader from "@/components/FullScreenLoader";
 import PaginationControls from "@/components/PaginationControls";
 import {AddApplicationSection} from "@/app/routes/home/components/AddApplicationSection";
+import {StatusButton} from "@/app/routes/home/components/StatusButton";
+import {useUpdateApplicationStatus} from "@/features/applications/api/update_application";
 
 export const ApplicationList= ()=>{
 
@@ -14,7 +16,7 @@ export const ApplicationList= ()=>{
     });
 
     const { data, isLoading, isError } = useApplicationsQuery(filters);
-
+    const { mutate } = useUpdateApplicationStatus();
     if (isLoading) return <FullScreenLoader></FullScreenLoader>;
 
     return (
@@ -28,10 +30,10 @@ export const ApplicationList= ()=>{
                     className="filter-selector-select"
                 >
                     <option value="">All Job Applications</option>
-                    <option value="applied">All Applied</option>
-                    <option value="interview">All Application Currently Interviewing</option>
-                    <option value="offer">Applications With Offers</option>
-                    <option value="rejected">Rejected Applications</option>
+                    <option value="applied">Applied</option>
+                    <option value="interview">Interviewing</option>
+                    <option value="offer">Offers</option>
+                    <option value="rejected">Rejected</option>
                 </select>
             </div></h2>
             <AddApplicationSection></AddApplicationSection>
@@ -40,15 +42,17 @@ export const ApplicationList= ()=>{
                     <li key={app.id} className="application-list-item">
                         <div className="application-list-item-card">
                             <section className="application-list-item-section">
-                        <div className="application-status">Status: {app.status}</div>
-                                <div className="application-days-since">Applied 16 days ago</div>
-
+                                <StatusButton id={app.id} currentStatus={app.status} />
+                                <div className="application-days-since">Applied {app.days_since_applied} days ago</div>
                             </section>
+                            <button className="detailed-view">View More</button>
                             <section className="application-list-item-section">
                                 <div className="application-position-title">{app.position_title}</div>
                                 <div className="application-company-name">{app.company.name}</div>
                                 <div className="application-location">{app.location.location_type}</div>
                             </section>
+                            <button className="edit-button">✎</button>
+                            <button className="delete-button">🗑️</button>
                         </div>
                     </li>
                 ))}

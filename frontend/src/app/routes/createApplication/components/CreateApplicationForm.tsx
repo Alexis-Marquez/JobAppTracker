@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createApplicationInputSchema, CreateApplicationInput, useCreateApplication } from "@/features/applications/api/create-application";
+import { createApplicationInputSchema, CreateApplicationInput, useCreateApplication } from "@/features/applications/api/create_application";
 import { z } from "zod";
 import {useNavigate} from "react-router";
 
@@ -114,9 +114,11 @@ export const CreateApplicationForm = () => {
                     <label>Status</label>
                     <select {...register("status")}>
                         <option value="applied">Applied</option>
-                        <option value="interview">Interview</option>
-                        <option value="offer">Offer</option>
+                        <option value="interviewing">Interview</option>
+                        <option value="offered">Offer</option>
                         <option value="rejected">Rejected</option>
+                        <option value="withdrawn">Withdrawn</option>
+                        <option value="accepted">Accepted</option>
                     </select>
                 </div>
 

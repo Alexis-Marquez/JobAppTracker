@@ -14,7 +14,7 @@ export const createApplicationInputSchema = z.object({
 });
 export type CreateApplicationInput = z.infer<typeof createApplicationInputSchema>;
 
-export const createApplication = (data: CreateApplicationInput): Promise<Application> => {
+export const create_application = (data: CreateApplicationInput): Promise<Application> => {
     return api.post('/applications/', data);
 };
 
@@ -22,7 +22,7 @@ export const useCreateApplication = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: CreateApplicationInput) => createApplication(data),
+        mutationFn: (data: CreateApplicationInput) => create_application(data),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['applications']}).then(r => (console.log(r)));
         }
