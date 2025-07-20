@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUpdateApplicationStatus } from "@/features/applications/api/update_application";
+import "./StatusButton.css"
 
 const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"] as const;
 const statusColors: Record<string, string> = {
@@ -35,13 +36,14 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
             {isOpen && (
                 <div className="modal-backdrop">
                     <div className="modal">
-                        <h3>Update Status</h3>
                         <select
                             value={newStatus}
                             onChange={(e) => setNewStatus(e.target.value)}
+                            className="filter-selector-select"
+                            style={{backgroundColor: statusColors[newStatus]}}
                         >
                             {STATUS_OPTIONS.map((status) => (
-                                <option key={status} value={status}>
+                                <option key={status} value={status} style={{backgroundColor: statusColors[status]}}>
                                     {status}
                                 </option>
                             ))}

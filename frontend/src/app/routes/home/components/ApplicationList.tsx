@@ -7,6 +7,9 @@ import PaginationControls from "@/components/PaginationControls";
 import {AddApplicationSection} from "@/app/routes/home/components/AddApplicationSection";
 import {StatusButton} from "@/app/routes/home/components/StatusButton";
 import {useUpdateApplicationStatus} from "@/features/applications/api/update_application";
+import {useDeleteApplication} from "@/features/applications/api/delete_application";
+import { ConfirmDeleteModal } from "@/components/ConfirmDeleteModal";
+import {DeleteApplicationButton} from "@/app/routes/home/components/DeleteApplicationButton";
 
 export const ApplicationList= ()=>{
 
@@ -17,6 +20,7 @@ export const ApplicationList= ()=>{
 
     const { data, isLoading, isError } = useApplicationsQuery(filters);
     const { mutate } = useUpdateApplicationStatus();
+
     if (isLoading) return <FullScreenLoader></FullScreenLoader>;
 
     return (
@@ -52,7 +56,7 @@ export const ApplicationList= ()=>{
                                 <div className="application-location">{app.location.location_type}</div>
                             </section>
                             <button className="edit-button">✎</button>
-                            <button className="delete-button">🗑️</button>
+                            <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
                         </div>
                     </li>
                 ))}
