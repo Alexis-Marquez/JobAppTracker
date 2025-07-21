@@ -42,13 +42,14 @@ class Application(models.Model):
 
     objects = ApplicationManager()
     application_date = models.DateTimeField("date applied")
-    benefits = models.TextField(blank=True)
+    benefits = models.TextField(blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     pay = models.CharField(max_length=100, blank=True)
     position_title = models.CharField(max_length=200)
+    posting_url = models.URLField(blank=True, null=True)
     resume_used = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.TextField(blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
@@ -57,6 +58,9 @@ class Application(models.Model):
         choices=ApplicationStatus.choices,
         default=ApplicationStatus.APPLIED
     )
+
+    class Meta:
+        ordering = ['-application_date']
 
     def __str__(self):
         return f"{self.position_title} at {self.company} ({self.status})"

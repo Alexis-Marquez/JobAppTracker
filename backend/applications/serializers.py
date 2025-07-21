@@ -13,6 +13,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
     company = CompanySerializer(read_only=True)
     location = LocationSerializer(read_only=True)
     resume_used = ResumeSerializer(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     company_data = serializers.JSONField(write_only=True, required=False)
     # FORMAT
@@ -68,6 +69,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
+        request = self.context.get('request')
+        if not request:
+            raise serializers.ValidationError("Request context missing.")
         company_data = validated_data.pop('company_data', None)
         location_data = validated_data.pop('location_data', None)
         application_date = validated_data.get('application_date')
@@ -83,4 +87,5 @@ class ApplicationSerializer(serializers.ModelSerializer):
             location_obj, _ = Location.objects.get_or_create(**location_data)
             validated_data['location'] = location_obj
 
+        validated_data['user'] = request.user
         return super().create(validated_data)

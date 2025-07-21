@@ -1,4 +1,5 @@
 from django.test import TestCase
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from companies.serializers import CompanySerializer
 from users.models import CustomUser
@@ -33,6 +34,12 @@ from rest_framework import status
 class ApplicationAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
+        self.user = CustomUser.objects.create_user(username="alex", password="pass123")
+
+        refresh = RefreshToken.for_user(self.user)
+        self.access_token = str(refresh.access_token)
+
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
 
     def test_create_company_via_api(self):
         """Test creating an application with nested company and location via API"""

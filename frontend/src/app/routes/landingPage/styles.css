@@ -1,0 +1,97 @@
+.title{
+    color: var(--color-accent);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.log-in-form{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 90%;
+    max-width: 300px;
+    padding: 2rem;
+    background: var(--color-white);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.log-in-error {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.log-in-form-section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+}
+.log-in-label{
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+.log-in-input{
+    border-radius: 4px;
+    background: var(--color-white);
+    border: 1px solid var(--color-primary-dark);
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    color: var(--color-primary-dark);
+    box-shadow: 0 2px 6px var(--color-primary-light);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.log-in-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(3, 41, 190, 0.2);
+}
+.log-in-button {
+    background-color: var(--color-primary-dark);
+    color: var(--color-white);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+.log-in-button:hover{
+    background-color: var(--color-accent);
+}
+.sub-title {
+    color: var(--color-primary-dark);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.sub-title a {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.sub-title a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .log-in-form {
+        padding: 1.5rem;
+    }
+
+    .log-in-input {
+        font-size: 0.95rem;
+    }
+
+    .log-in-button {
+        font-size: 0.95rem;
+    }
+}
