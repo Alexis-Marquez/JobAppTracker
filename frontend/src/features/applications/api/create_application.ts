@@ -6,9 +6,15 @@ import {Application} from "@/types/api";
 export const createApplicationInputSchema = z.object({
     position_title: z.string().min(1, "Position is required"),
     company_data: z.object({name: z.string().min(1, "Company name is required"), website: z.union([z.literal(""), z.string().url()]).optional()}),
-    location_data: z.object({city: z.string().min(1, "City name is required"), state: z.string().min(1).optional(), country: z.string().min(1).optional(), location_type: z.enum(["ONSITE", "REMOTE","HYBRID"]).optional()}).optional(),
+        location_data: z.object({
+            city: z.union([z.literal(''), z.string().min(1, "City name is required")]).optional(),
+            state: z.union([z.literal(''), z.string().min(1)]).optional(),
+            country: z.union([z.literal(''), z.string().min(1)]).optional(),
+
+            location_type: z.enum(["ONSITE", "REMOTE","HYBRID"]).optional()
+        }).optional(),
     application_date: z.date().min(new Date(0)),
-    status: z.enum(["applied", "interview", "offer", "rejected"]).optional(),
+    status: z.enum(["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"]).optional(),
     posting_url: z.string().url().optional(),
     description: z.string().optional()
 });

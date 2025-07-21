@@ -67,6 +67,7 @@
 
 .application-list-item-card:hover {
     transform: translateY(-4px) scale(105%);
+    z-index: 10;
 }
 
 .application-list-item-section {

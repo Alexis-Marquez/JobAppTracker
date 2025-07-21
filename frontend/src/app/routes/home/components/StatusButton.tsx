@@ -35,7 +35,7 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
 
             {isOpen && (
                 <div className="modal-backdrop">
-                    <div className="modal">
+                    <div className="status-button-modal">
                         <select
                             value={newStatus}
                             onChange={(e) => setNewStatus(e.target.value)}
@@ -43,13 +43,13 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
                             style={{backgroundColor: statusColors[newStatus]}}
                         >
                             {STATUS_OPTIONS.map((status) => (
-                                <option key={status} value={status} style={{backgroundColor: statusColors[status]}}>
+                                <option key={status} value={status} style={{backgroundColor: "var(--color-white)"}}>
                                     {status}
                                 </option>
                             ))}
                         </select>
 
-                        <div className="modal-buttons">
+                        <div className="modal-status-buttons">
                             <button onClick={() => setIsOpen(false)}>Cancel</button>
                             <button onClick={handleSave} disabled={isPending}>
                                 {isPending ? "Saving..." : "Save"}

@@ -64,7 +64,7 @@ type ProtectedRouteProps = {
 export const AuthProvider = ({children}: ProtectedRouteProps) => {
     const queryClient = useQueryClient();
     const location = useLocation();
-    const { data, isLoading } = useQuery({
+    const { data, isFetching } = useQuery({
         queryKey: ["currentUser"],
         queryFn: getUser,
         enabled: location.pathname !== "/login/",
@@ -82,7 +82,8 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
 
     return (
         <AuthContext.Provider value={{user, logout }}>
-            {isLoading ? <FullScreenLoader /> : children}
+            {isFetching && <FullScreenLoader />}
+            {children}
         </AuthContext.Provider>
     );
 };
