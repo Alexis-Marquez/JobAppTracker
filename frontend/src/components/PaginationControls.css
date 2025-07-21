@@ -10,3 +10,5 @@
 .button:hover {
     background-color: var(--color-accent);
 }
+.button:disabled {
+}

@@ -12,7 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
     --color-white: #FEFEFE;
-    --color-primary-dark: #0D033B;
+    --color-primary-dark: rgba(13, 3, 59);
     --color-primary: #0329BE;
     --color-primary-light: #9CD6FF;
     --color-accent: #B043C6;
@@ -49,12 +49,13 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 2px solid var(--color-accent);
   padding: 0.7em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  color: var(--color-primary-dark);
+  background-color: transparent;
   cursor: pointer;
   transition: border-color 0.25s;
   max-height: max-content;

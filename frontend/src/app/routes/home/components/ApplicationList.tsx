@@ -5,11 +5,8 @@ import "../styles.css"
 import FullScreenLoader from "@/components/FullScreenLoader";
 import PaginationControls from "@/components/PaginationControls";
 import {AddApplicationSection} from "@/app/routes/home/components/AddApplicationSection";
-import {StatusButton} from "@/app/routes/home/components/StatusButton";
 import {useUpdateApplicationStatus} from "@/features/applications/api/update_application";
-import {useDeleteApplication} from "@/features/applications/api/delete_application";
-import { ConfirmDeleteModal } from "@/components/ConfirmDeleteModal";
-import {DeleteApplicationButton} from "@/app/routes/home/components/DeleteApplicationButton";
+import {ApplicationListCard} from "@/app/routes/home/components/ApplicationListCard";
 
 export const ApplicationList= ()=>{
 
@@ -44,20 +41,7 @@ export const ApplicationList= ()=>{
             <ul className="application-list">
                 {data?.results.map((app:Application) => (
                     <li key={app.id} className="application-list-item">
-                        <div className="application-list-item-card">
-                            <section className="application-list-item-section">
-                                <StatusButton id={app.id} currentStatus={app.status} />
-                                <div className="application-days-since">Applied {app.days_since_applied} days ago</div>
-                            </section>
-                            <button className="detailed-view">View More</button>
-                            <section className="application-list-item-section">
-                                <div className="application-position-title">{app.position_title}</div>
-                                <div className="application-company-name">{app.company.name}</div>
-                                <div className="application-location">{app.location.location_type}</div>
-                            </section>
-                            <button className="edit-button">✎</button>
-                            <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
-                        </div>
+                       <ApplicationListCard app={app}></ApplicationListCard>
                     </li>
                 ))}
             </ul>

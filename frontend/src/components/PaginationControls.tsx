@@ -1,3 +1,4 @@
+import "./PaginationControls.css"
 type PaginationControlsProps = {
     next: string | null;
     previous: string | null;
