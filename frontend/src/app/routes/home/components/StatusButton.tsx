@@ -26,8 +26,8 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
 
     return (
         <>
-            <button
-                style={{ backgroundColor: statusColors[currentStatus], color: "white", border: "none", borderRadius: "6px", padding: "0.4rem 1rem", cursor: "pointer" }}
+            <button className="status-button"
+                style={{ backgroundColor: statusColors[currentStatus]}}
                 onClick={() => setIsOpen(true)}
             >
                 {currentStatus}
@@ -43,7 +43,7 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
                             style={{backgroundColor: statusColors[newStatus]}}
                         >
                             {STATUS_OPTIONS.map((status) => (
-                                <option key={status} value={status} style={{backgroundColor: "var(--color-white)"}}>
+                                <option key={status} value={status} style={{backgroundColor: "var(--color-white)", color:"var(--color-primary-dark"}}>
                                     {status}
                                 </option>
                             ))}

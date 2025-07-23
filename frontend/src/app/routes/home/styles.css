@@ -21,17 +21,19 @@
     flex-direction: column;
 }
 .filter-selector-select {
-    padding: 0.5rem 1rem;
     border: 1px solid var(--color-primary-dark);
     border-radius: 999px;
-    background: transparent;
-    color: var(--color-primary-dark);
     font-size: 0.95rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    cursor: pointer;
     transition: all 0.2s ease;
+    color: var(--color-white);
+    padding: 0.4rem 1rem;
+    cursor: pointer;
 }
 
+.filter-selector-select:hover {
+    transform: scale(1.02);
+}
 
 .filter-selector-select:focus {
     outline: none;
@@ -66,7 +68,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 .application-list-item-card:hover {
     transform: translateY(-4px) scale(105%);
