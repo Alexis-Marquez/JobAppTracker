@@ -4,12 +4,12 @@ import "./StatusButton.css"
 
 const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"] as const;
 const statusColors: Record<string, string> = {
-    applied: "#3B82F6",
-    interviewing: "#F59E0B",
-    offered: "#10B981",
-    rejected: "#EF4444",
+    applied: "#9ebcf3",
+    interviewing: "#f4cc8c",
+    offered: "#6fae94",
+    rejected: "#e89c9c",
     withdrawn: "#838383",
-    accepted: "#65f436"
+    accepted: "#bbf3a8"
 };
 
 export function StatusButton({ id, currentStatus }: { id: number; currentStatus: string }) {
