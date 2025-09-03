@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUpdateApplicationStatus } from "@/features/applications/api/update_application";
 import "./StatusButton.css"
+import {capitalizeFirstLetter} from "@/lib/functions/helperFuncs"
 
 const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"] as const;
 const statusColors: Record<string, string> = {
@@ -30,7 +31,7 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
                 style={{ backgroundColor: statusColors[currentStatus]}}
                 onClick={() => setIsOpen(true)}
             >
-                {currentStatus}
+                {capitalizeFirstLetter(currentStatus)}
             </button>
 
             {isOpen && (
