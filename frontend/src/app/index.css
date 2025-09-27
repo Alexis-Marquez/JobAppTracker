@@ -12,13 +12,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
     --color-white: #FEFEFE;
-    --color-primary-dark: rgba(13, 3, 59);
-    --color-primary: #0329BE;
-    --color-primary-light: #9CD6FF;
-    --color-accent: #B043C6;
+    --color-primary-dark: #3a2f43;
+    --color-primary: #048873;
+    --color-primary-light: #9dd3cc;
+    --color-accent: #58c8b4;
     --color-danger: #DE4F2D;
     --color-success: #FCA601;
 }
+
+
+/*--color-white: #FEFEFE;*/
+/*--color-primary-dark: #47026c;*/
+/*--color-primary: #7161EF;*/
+/*--color-primary-light: #DEC0F1;*/
+/*--color-accent: #B043C6;*/
+/*--color-danger: #DE4F2D;*/
+/*--color-success: #FCA601;*/
 
 a {
   font-weight: 500;
@@ -62,6 +71,7 @@ button {
 }
 button:hover {
   border-color: #646cff;
+  transform: scale(1.15);
 }
 button:focus,
 button:focus-visible {

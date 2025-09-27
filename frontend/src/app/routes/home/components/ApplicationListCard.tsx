@@ -26,7 +26,7 @@ export function ApplicationListCard ({app}: Props){
                 <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
             </div>
             <div className="application-footer">
-                <button className="detailed-view" onClick={()=>{setDetailedView(!detailedView)}}>View More</button>
+                <button className="detailed-view" onClick={()=>{setDetailedView(!detailedView)}}>Detailed View</button>
             </div>
             {detailedView &&
                 <ApplicationListDetailedView setDetailedView={setDetailedView} app={app}></ApplicationListDetailedView>

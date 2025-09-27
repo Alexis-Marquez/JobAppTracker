@@ -1,17 +1,19 @@
 import {useState} from "react";
 import {useApplicationsQuery} from "@/features/applications/api/get_applications";
-import {Application} from "@/types/api";
+import {Application, ApplicationsFilters} from "@/types/api";
 import "../styles.css"
 import FullScreenLoader from "@/components/FullScreenLoader";
 import PaginationControls from "@/components/PaginationControls";
 import {AddApplicationSection} from "@/app/routes/home/components/AddApplicationSection";
 import {useUpdateApplicationStatus} from "@/features/applications/api/update_application";
 import {ApplicationListCard} from "@/app/routes/home/components/ApplicationListCard";
+import SearchBar from "./SearchBar";
 
 export const ApplicationList= ()=>{
 
-    const [filters, setFilters] = useState<{ status?: string; page?: number }>({
+    const [filters, setFilters] = useState<ApplicationsFilters>({
         status: undefined,
+        search: undefined,
         page: 1,
     });
 
@@ -38,6 +40,14 @@ export const ApplicationList= ()=>{
                 </select>
             </div></h2>
             <AddApplicationSection></AddApplicationSection>
+            <div>Total Number of Applications: {data?.count}</div>
+            <SearchBar onSearch={(search) =>
+                setFilters((prev) => ({
+                ...prev,
+                search: search || undefined,
+                page: 1, 
+                }))
+            }></SearchBar>
             <ul className="application-list">
                 {data?.results.map((app:Application) => (
                     <li key={app.id} className="application-list-item">

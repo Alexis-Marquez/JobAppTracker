@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Application
@@ -11,6 +11,8 @@ class ApplicationViewSet(viewsets.ModelViewSet):
     serializer_class = ApplicationSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['company__name', 'position_title']
     def get_queryset(self):
         queryset = Application.objects.filter(user=self.request.user)
 

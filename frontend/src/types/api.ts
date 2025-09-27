@@ -59,3 +59,9 @@ export type AuthResponse = {
 export type RefreshTokenResponse = {
     access: string;
 };
+
+export type ApplicationsFilters = {
+    status?: string;
+    page?: number;
+    search?: string;
+};

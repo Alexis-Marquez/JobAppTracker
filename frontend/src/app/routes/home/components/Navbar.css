@@ -1,0 +1,23 @@
+.navbar {
+    background-color: var(--color-white);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100%;
+}
+.navbar-links{
+    display: flex;
+    justify-content: space-evenly;
+}
+.navbar-link{
+    text-decoration: none;
+    color: var(--color-primary);
+    font-size: x-large;
+    padding: .30rem;
+    width: 20%;
+}
+.navbar-link:hover{
+    background-color: var(--color-primary-light);
+    color: var(--color-white);
+}
