@@ -40,7 +40,6 @@ export const ApplicationList= ()=>{
                 </select>
             </div></h2>
             <AddApplicationSection></AddApplicationSection>
-            <div>Total Number of Applications: {data?.count}</div>
             <SearchBar onSearch={(search) =>
                 setFilters((prev) => ({
                 ...prev,
