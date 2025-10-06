@@ -3,14 +3,15 @@ import { useUpdateApplicationStatus } from "@/features/applications/api/update_a
 import "./StatusButton.css"
 import {capitalizeFirstLetter} from "@/lib/functions/helperFuncs"
 
-const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"] as const;
+const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted","failed_interview"] as const;
 const statusColors: Record<string, string> = {
     applied: "#9ebcf3",
     interviewing: "#f4cc8c",
     offered: "#6fae94",
     rejected: "#e89c9c",
     withdrawn: "#838383",
-    accepted: "#bbf3a8"
+    accepted: "#bbf3a8",
+    failed_interview: "#f3a8a8",
 };
 
 export function StatusButton({ id, currentStatus }: { id: number; currentStatus: string }) {

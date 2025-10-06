@@ -37,6 +37,8 @@ export const ApplicationList= ()=>{
                     <option value="interview">Interviewing</option>
                     <option value="offer">Offers</option>
                     <option value="rejected">Rejected</option>
+                    <option value="failed_interview">Failed Interview</option>
+                    <option value="withdrawn">Withdrawn</option>
                 </select>
             </div></h2>
             <AddApplicationSection></AddApplicationSection>

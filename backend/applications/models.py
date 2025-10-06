@@ -35,6 +35,7 @@ class Application(models.Model):
         APPLIED = 'applied', 'Applied'
         INTERVIEWING = 'interviewing', 'Interviewing'
         OFFERED = 'offered', 'Offered'
+        FAILED_INTERVIEW = 'failed_interview', 'Failed Interview'
         REJECTED = 'rejected', 'Rejected'
         WITHDRAWN = 'withdrawn', 'Withdrawn'
         ACCEPTED = 'accepted', 'Accepted'
