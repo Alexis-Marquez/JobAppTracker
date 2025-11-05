@@ -37,7 +37,7 @@ class Location(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['city', 'state', 'country'],
+                fields=['city', 'state', 'country','location_type'],
                 name='unique_location'
             )
         ]
