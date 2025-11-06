@@ -25,6 +25,7 @@ export const ApplicationList= ()=>{
     return (
         <div className="Application-list-container">
             <h2 className="Application-list-title"> <div className="filter-selector">
+                <div>{data?.count}</div>
                 <select
                     value={filters.status || ""}
                     onChange={(e) =>
@@ -37,10 +38,11 @@ export const ApplicationList= ()=>{
                     <option value="interview">Interviewing</option>
                     <option value="offer">Offers</option>
                     <option value="rejected">Rejected</option>
+                    <option value="failed_interview">Failed Interview</option>
+                    <option value="withdrawn">Withdrawn</option>
                 </select>
             </div></h2>
             <AddApplicationSection></AddApplicationSection>
-            <div>Total Number of Applications: {data?.count}</div>
             <SearchBar onSearch={(search) =>
                 setFilters((prev) => ({
                 ...prev,

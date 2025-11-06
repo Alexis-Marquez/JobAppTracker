@@ -23,6 +23,7 @@ export type Application = {
     status?: 'applied' | 'interview' | 'offer' | 'rejected';
     description?: string;
     benefits?: string;
+    posting_url?: string;
     resume_used?: any;
     user?: number;
     is_active?: boolean;

@@ -70,11 +70,7 @@ export const CreateApplicationForm = () => {
                     <input type="text" {...register("company_data.name")}/>
                     {errors.company_data?.name && <p className="error-message">{errors.company_data.name.message}</p>}
                 </div>
-                <div className="form-group">
-                    <label>Company Website</label>
-                    <input type="url" {...register("company_data.website")} />
-                    {errors.company_data?.website && <p className="error-message">{errors.company_data.website.message}</p>}
-                </div>
+                
                 <div className="form-group">
                     <label>Location Type</label>
                     <select {...register("location_data.location_type")} className="border p-2 w-full">
@@ -122,10 +118,7 @@ export const CreateApplicationForm = () => {
                     </select>
                 </div>
 
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea {...register("description")} rows={4} />
-                </div>
+                
             </div>
             <div className="button-container">
                 <button type="submit" disabled={isPending} className="submit-button">

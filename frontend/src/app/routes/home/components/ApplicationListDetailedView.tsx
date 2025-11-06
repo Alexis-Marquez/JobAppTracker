@@ -12,8 +12,8 @@ export function ApplicationListDetailedView ({app}: Props){
                 <div className="application-benefits">{app.benefits}</div>
                 <div className="application-pay">{app.pay}</div>
             </section>
-            <div className="application-description">{app.description}</div>
             <div className="application-requirements">{app.requirements}</div>
+            <div className="application-link"><a href={app.posting_url} target="_blank">Posting URL</a></div>
         </div>
     )
 }

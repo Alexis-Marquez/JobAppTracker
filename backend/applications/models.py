@@ -35,6 +35,7 @@ class Application(models.Model):
         APPLIED = 'applied', 'Applied'
         INTERVIEWING = 'interviewing', 'Interviewing'
         OFFERED = 'offered', 'Offered'
+        FAILED_INTERVIEW = 'failed_interview', 'Failed Interview'
         REJECTED = 'rejected', 'Rejected'
         WITHDRAWN = 'withdrawn', 'Withdrawn'
         ACCEPTED = 'accepted', 'Accepted'
@@ -49,7 +50,7 @@ class Application(models.Model):
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     pay = models.CharField(max_length=100, blank=True)
     position_title = models.CharField(max_length=200)
-    posting_url = models.URLField(blank=True, null=True)
+    posting_url = models.URLField(blank=True, null=True, max_length=500)
     resume_used = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.TextField(blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
