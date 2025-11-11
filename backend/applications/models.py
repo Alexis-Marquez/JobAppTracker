@@ -29,6 +29,22 @@ class ApplicationManager(models.Manager):
     def for_user(self, user):
         return self.filter(user=user)
 
+class ApplicationStatusHistory(models.Model):
+    application = models.ForeignKey(
+        'Application',
+        on_delete=models.CASCADE,
+        related_name='history'
+    )
+    old_status = models.CharField(max_length=20, blank=True, null=True)
+    new_status = models.CharField(max_length=20)
+    changed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['changed_at']
+
+    def __str__(self):
+        return f"{self.application} changed to {self.new_status} on {self.changed_at}"
+
 
 class Application(models.Model):
     class ApplicationStatus(models.TextChoices):
@@ -78,4 +94,25 @@ class Application(models.Model):
 
     def has_offer(self):
         return self.status == self.ApplicationStatus.OFFERED
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            # Fetch the previous version
+            previous = Application.objects.get(pk=self.pk)
+            if previous.status != self.status:
+                ApplicationStatusHistory.objects.create(
+                    application=self,
+                    old_status=previous.status,
+                    new_status=self.status
+                )
+        else:
+            # First time created — log initial status
+            ApplicationStatusHistory.objects.create(
+                application=self,
+                old_status=None,
+                new_status=self.status
+            )
+
+        super().save(*args, **kwargs)
+
 
