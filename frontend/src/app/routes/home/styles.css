@@ -127,3 +127,8 @@
     font-size: 0.9em;
 }
 
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+}
+

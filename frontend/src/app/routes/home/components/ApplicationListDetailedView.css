@@ -1,0 +1,24 @@
+.history-status-change{
+
+}
+.application-history-item{
+    display: flex;
+    justify-content: center;
+}
+.application-history-list{
+    list-style-type: none;
+    padding: 0;
+}
+.application-history-item-box{
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-accent);
+    border-radius: 2.5px;
+}
+.timeline-title {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--color-primary-dark);
+}
+span{
+    padding: 10px;
+}

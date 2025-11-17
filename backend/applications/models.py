@@ -94,25 +94,26 @@ class Application(models.Model):
 
     def has_offer(self):
         return self.status == self.ApplicationStatus.OFFERED
-    
     def save(self, *args, **kwargs):
-        if self.pk:
-            # Fetch the previous version
-            previous = Application.objects.get(pk=self.pk)
-            if previous.status != self.status:
-                ApplicationStatusHistory.objects.create(
-                    application=self,
-                    old_status=previous.status,
-                    new_status=self.status
-                )
-        else:
-            # First time created — log initial status
+        is_new = self.pk is None
+        old_status = None
+        if not is_new:
+            old_status = Application.objects.get(pk=self.pk).status
+
+        super().save(*args, **kwargs)
+
+        if is_new:
             ApplicationStatusHistory.objects.create(
                 application=self,
                 old_status=None,
                 new_status=self.status
             )
+        elif old_status != self.status:
+            ApplicationStatusHistory.objects.create(
+                application=self,
+                old_status=old_status,
+                new_status=self.status
+            )
 
-        super().save(*args, **kwargs)
 
 

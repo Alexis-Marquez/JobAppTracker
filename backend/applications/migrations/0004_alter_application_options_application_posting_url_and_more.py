@@ -13,7 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # ✅ KEEP ONLY THIS
         migrations.CreateModel(
             name='ApplicationStatusHistory',
             fields=[

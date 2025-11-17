@@ -5,6 +5,16 @@ export type BaseEntity = {
 
 export type Entity<T> = T & BaseEntity;
 
+export type ApplicationStatus = 'applied' | 'interview' | 'offer' | 'rejected';
+
+
+export type HistoryEntry = {
+    old_status: ApplicationStatus;
+    new_status: ApplicationStatus;
+    changed_at: string; // ISO timestamp
+};
+
+
 export type Application = {
     id: number;
     position_title: string;
@@ -20,12 +30,13 @@ export type Application = {
         location_type: 'onsite' | 'remote' | 'hybrid';
     };
     application_date: string;
-    status?: 'applied' | 'interview' | 'offer' | 'rejected';
+    status?: ApplicationStatus;
     description?: string;
     benefits?: string;
     posting_url?: string;
     resume_used?: any;
     user?: number;
+    history?: HistoryEntry[];
     is_active?: boolean;
     days_since_applied?: number;
     last_updated?: string;
