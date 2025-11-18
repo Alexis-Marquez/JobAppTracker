@@ -14,11 +14,65 @@
     border-bottom: 1px solid var(--color-accent);
     border-radius: 2.5px;
 }
-.timeline-title {
-    font-size: 1.25rem;
+/* Timeline Base */
+.timeline {
+    list-style: none;
     margin: 0;
-    color: var(--color-primary-dark);
+    padding: 0;
+    margin-left: 1.6rem; /* line indentation */
+    border-left: 2px solid #ddd;
+    margin-bottom: 0/5rem;
 }
-span{
-    padding: 10px;
+
+/* Spacing between events */
+.timeline-item {
+    position: relative;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+/* Status Dot */
+.timeline-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    position: absolute;
+    left: -9px;
+    top: 10px;
+    border: 2px solid white;
+}
+
+/* Status colors (match your card colors) */
+.timeline-dot.applied {
+    background-color: #AFC7FF;
+}
+.timeline-dot.rejected {
+    background-color: #E8A0A0;
+}
+.timeline-dot.interview {
+    background-color: #8CE89F;
+}
+.timeline-dot.offer {
+    background-color: #FFE08A;
+}
+
+/* Content area */
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-timestamp {
+    font-weight: 500;
+    color: #333;
+}
+
+.history-status-change {
+    margin-top: 2px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Timeline title */
+.timeline-title {
+    margin-bottom: 0.75rem;
 }

@@ -18,7 +18,18 @@ export function ApplicationListCard ({app}: Props){
                     <div className="application-days-since">Applied {app.days_since_applied} days ago</div>
                 </section>
                 <section className="application-list-item-section">
-                    <div className="application-position-title">{app.position_title}</div>
+                    <div className="application-position-title">
+                        {app.posting_url && (
+                <div className="application-link">
+                    <a href={app.posting_url} target="_blank" rel="noopener noreferrer">
+                        {app.position_title}
+                    </a>
+                </div>
+            )}
+                        {!app.posting_url && (
+                            <span>{app.position_title}</span>
+                        )}
+                        </div>
                     <div className="application-company-name">{app.company.name}</div>
                     <div className="application-location">{app.location.location_type}</div>
                 </section>

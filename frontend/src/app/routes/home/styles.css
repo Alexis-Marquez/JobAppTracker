@@ -87,9 +87,12 @@
     font-weight: bold;
 }
 
+.application-link{
+    color: var(--color-primary-dark);
+}
 .application-company-name {
     font-size: clamp(1rem, 2vw, 1.5rem);
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
 }
 
 .application-location,

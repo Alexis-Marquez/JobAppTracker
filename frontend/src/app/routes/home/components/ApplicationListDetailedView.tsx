@@ -10,41 +10,44 @@ type Props = {
 export function ApplicationListDetailedView({ app }: Props) {
     return (
         <div className="additional-fields">
-             {app.posting_url && (
-                <div className="application-link">
-                    <a href={app.posting_url} target="_blank" rel="noopener noreferrer">
-                        Posting URL
-                    </a>
-                </div>
-            )}
+
             <section className="application-list-history-section">
                 {app.history && app.history.length > 0 ? (
                     <>
                         <h3 className="timeline-title">Timeline</h3>
-                        <ul className="application-history-list">
+
+                        <ul className="application-history-list timeline">
                             {app.history.map((entry, index) => (
-                                <li key={index} className="application-history-item">
-                                    {entry.old_status === null ? (
-                                        <div className="application-history-item-box">
-                                        <span className="history-timestamp">
-                                            {capitalizeFirstLetter(entry.new_status)} on{" "}
-                                            {new Date(entry.changed_at).toLocaleDateString()}
-                                        </span>
-                                        </div>
-                                    ) : (
-                                        <div className="application-history-item-box">
+                                <li key={index} className="application-history-item timeline-item">
+
+                                    {/* Dot */}
+                                    <div
+                                        className={
+                                            "timeline-dot " + entry.new_status.toLowerCase()
+                                        }
+                                    />
+
+                                    {/* Content */}
+                                    <div className="timeline-content">
+                                        {entry.old_status === null ? (
                                             <span className="history-timestamp">
+                                                {capitalizeFirstLetter(entry.new_status)} on{" "}
                                                 {new Date(entry.changed_at).toLocaleDateString()}
                                             </span>
-                                            :
-                                            <span className="history-status-change">
-                                                {" "}
-                                                Status changed from{" "}
-                                                {entry.old_status} to{" "}
-                                                {entry.new_status}
-                                            </span>
-                                            </div>
-                                    )}
+                                        ) : (
+                                            <>
+                                                <span className="history-timestamp">
+                                                    {new Date(entry.changed_at).toLocaleDateString()}
+                                                </span>
+
+                                                <span className="history-status-change">
+                                                    Status changed from{" "}
+                                                    <strong>{entry.old_status}</strong> to{" "}
+                                                    <strong>{entry.new_status}</strong>
+                                                </span>
+                                            </>
+                                        )}
+                                    </div>
                                 </li>
                             ))}
                         </ul>
