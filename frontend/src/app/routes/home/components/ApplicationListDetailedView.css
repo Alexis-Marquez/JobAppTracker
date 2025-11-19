@@ -1,27 +1,31 @@
-.history-status-change{
+.history-status-change { }
 
-}
 .application-history-item{
     display: flex;
     justify-content: center;
+    opacity: 0;
+    animation: fadeSlideIn 0.45s ease-out forwards;
 }
+
 .application-history-list{
     list-style-type: none;
     padding: 0;
 }
+
 .application-history-item-box{
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--color-accent);
     border-radius: 2.5px;
 }
+
 /* Timeline Base */
 .timeline {
     list-style: none;
     margin: 0;
     padding: 0;
-    margin-left: 1.6rem; /* line indentation */
+    margin-left: 1.6rem;
     border-left: 2px solid #ddd;
-    margin-bottom: 0/5rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Spacing between events */
@@ -39,9 +43,12 @@
     left: -9px;
     top: 10px;
     border: 2px solid white;
+
+    /* Animation C: pop-in */
+    opacity: 0;
+    animation: popIn 0.35s ease-out forwards;
 }
 
-/* Status colors (match your card colors) */
 .timeline-dot.applied {
     background-color: #AFC7FF;
 }
@@ -76,3 +83,32 @@
 .timeline-title {
     margin-bottom: 0.75rem;
 }
+
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Stagger items */
+.application-history-item:nth-child(1) { animation-delay: 0.05s; }
+.application-history-item:nth-child(2) { animation-delay: 0.1s; }
+.application-history-item:nth-child(3) { animation-delay: 0.15s; }
+.application-history-item:nth-child(4) { animation-delay: 0.2s; }
+.application-history-item:nth-child(5) { animation-delay: 0.25s; }

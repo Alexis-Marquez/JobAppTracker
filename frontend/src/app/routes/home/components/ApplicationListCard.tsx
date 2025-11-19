@@ -3,13 +3,19 @@ import {DeleteApplicationButton} from "@/app/routes/home/components/DeleteApplic
 import {ApplicationListDetailedView} from "@/app/routes/home/components/ApplicationListDetailedView";
 import {Application} from "@/types/api";
 import {useState} from "react";
+import "../styles.css";
 
 type Props = {
     app: Application
 }
 
 export function ApplicationListCard ({app}: Props){
-    const [detailedView, setDetailedView] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    function toggleDetail() {
+    setOpen(v => !v);
+}
+
     return(
         <div className="application-list-item-card">
             <div className="application-list-content">
@@ -37,11 +43,16 @@ export function ApplicationListCard ({app}: Props){
                 <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
             </div>
             <div className="application-footer">
-                <button className="detailed-view" onClick={()=>{setDetailedView(!detailedView)}}>{detailedView ? "^":"v"}</button>
+                <button className="detailed-view" onClick={toggleDetail}>
+                    {open ? "^" : "v"}
+                </button>
             </div>
-            {detailedView &&
-                <ApplicationListDetailedView setDetailedView={setDetailedView} app={app}></ApplicationListDetailedView>
-            }
+                <div className={`detailed-view-animated ${open ? "open" : ""}`}>
+                    <ApplicationListDetailedView
+                        setDetailedView={toggleDetail}
+                        app={app}
+                    />
+                </div>
         </div>
     )
 }

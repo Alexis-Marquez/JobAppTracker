@@ -19,21 +19,24 @@ export function ApplicationListDetailedView({ app }: Props) {
                         <ul className="application-history-list timeline">
                             {app.history.map((entry, index) => (
                                 <li key={index} className="application-history-item timeline-item">
-
-                                    {/* Dot */}
                                     <div
                                         className={
                                             "timeline-dot " + entry.new_status.toLowerCase()
                                         }
                                     />
 
-                                    {/* Content */}
                                     <div className="timeline-content">
                                         {entry.old_status === null ? (
+                                            <>
                                             <span className="history-timestamp">
-                                                {capitalizeFirstLetter(entry.new_status)} on{" "}
                                                 {new Date(entry.changed_at).toLocaleDateString()}
                                             </span>
+
+                                            <span className="history-status-change">
+                                                Application created with status{" "}
+                                                <strong>{entry.new_status}</strong>
+                                            </span>
+                                            </>
                                         ) : (
                                             <>
                                                 <span className="history-timestamp">

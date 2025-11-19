@@ -135,3 +135,21 @@ button:focus-visible {
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
 }
 
+/* Base hidden state */
+.detailed-view-animated {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: 
+        max-height 0.4s ease-in-out, 
+        opacity 0.3s ease-in-out,
+        transform 0.4s ease-in-out;
+}
+
+/* Open state */
+.detailed-view-animated.open {
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
+}
