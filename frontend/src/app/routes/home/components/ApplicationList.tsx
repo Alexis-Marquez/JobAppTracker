@@ -25,7 +25,6 @@ export const ApplicationList= ()=>{
     return (
         <div className="Application-list-container">
             <h2 className="Application-list-title"> <div className="filter-selector">
-                <div>{data?.count}</div>
                 <select
                     value={filters.status || ""}
                     onChange={(e) =>
