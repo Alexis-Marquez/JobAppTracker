@@ -1,6 +1,6 @@
 from django.utils import timezone
 from rest_framework import serializers
-from applications.models import Application
+from applications.models import Application, ApplicationStatusHistory
 from companies.models import Company
 from companies.serializers import CompanySerializer
 from locations.models import Location
@@ -9,12 +9,18 @@ from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
 
 
+class ApplicationStatusHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApplicationStatusHistory
+        fields = ['old_status', 'new_status', 'changed_at']
+
+
 class ApplicationSerializer(serializers.ModelSerializer):
     company = CompanySerializer(read_only=True)
     location = LocationSerializer(read_only=True)
     resume_used = ResumeSerializer(read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
-
+    history = ApplicationStatusHistorySerializer(many=True, read_only=True)
     company_data = serializers.JSONField(write_only=True, required=False)
     # FORMAT
     # {
@@ -45,6 +51,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     def get_is_active(self, obj):
         return obj.is_active()
+
 
     def get_days_since_applied(self, obj):
         return obj.days_since_applied()

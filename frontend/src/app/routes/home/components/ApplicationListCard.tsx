@@ -3,13 +3,19 @@ import {DeleteApplicationButton} from "@/app/routes/home/components/DeleteApplic
 import {ApplicationListDetailedView} from "@/app/routes/home/components/ApplicationListDetailedView";
 import {Application} from "@/types/api";
 import {useState} from "react";
+import "../styles.css";
 
 type Props = {
     app: Application
 }
 
 export function ApplicationListCard ({app}: Props){
-    const [detailedView, setDetailedView] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    function toggleDetail() {
+    setOpen(v => !v);
+}
+
     return(
         <div className="application-list-item-card">
             <div className="application-list-content">
@@ -18,7 +24,18 @@ export function ApplicationListCard ({app}: Props){
                     <div className="application-days-since">Applied {app.days_since_applied} days ago</div>
                 </section>
                 <section className="application-list-item-section">
-                    <div className="application-position-title">{app.position_title}</div>
+                    <div className="application-position-title">
+                        {app.posting_url && (
+                <div className="application-link">
+                    <a href={app.posting_url} target="_blank" rel="noopener noreferrer">
+                        {app.position_title}
+                    </a>
+                </div>
+            )}
+                        {!app.posting_url && (
+                            <span>{app.position_title}</span>
+                        )}
+                        </div>
                     <div className="application-company-name">{app.company.name}</div>
                     <div className="application-location">{app.location.location_type}</div>
                 </section>
@@ -26,11 +43,16 @@ export function ApplicationListCard ({app}: Props){
                 <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
             </div>
             <div className="application-footer">
-                <button className="detailed-view" onClick={()=>{setDetailedView(!detailedView)}}>Detailed View</button>
+                <button className="detailed-view" onClick={toggleDetail}>
+                    {open ? "^" : "v"}
+                </button>
             </div>
-            {detailedView &&
-                <ApplicationListDetailedView setDetailedView={setDetailedView} app={app}></ApplicationListDetailedView>
-            }
+                <div className={`detailed-view-animated ${open ? "open" : ""}`}>
+                    <ApplicationListDetailedView
+                        setDetailedView={toggleDetail}
+                        app={app}
+                    />
+                </div>
         </div>
     )
 }
