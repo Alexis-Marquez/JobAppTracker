@@ -77,3 +77,15 @@ export type ApplicationsFilters = {
     page?: number;
     search?: string;
 };
+
+export type ApplicationsStats = {
+    total: number;
+    rejected_percentage: number;
+    interviewing: number;
+    older_than_30_days_and_in_applied: number;
+}
+
+// "total": total,
+//         "rejected_percentage": rejected / total * 100 if total else 0,
+//         "interviewing": interviewing,
+//         "older_than_30_days_and_in_applied": older_than_30,
