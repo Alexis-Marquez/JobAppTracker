@@ -19,11 +19,16 @@ export function InsightsPageHome(){
     return(
         <div className="container-page">
             <Navbar></Navbar>
-            <h1>Insights</h1>
-            <div>Total Applications: {data?.total}</div>
-            <div>Rejected %: {data?.rejected_percentage}</div>
-            <div>Interviewing: {data?.interviewing}</div>
-            <div>Older than 30 days and in applied: {data?.older_than_30_days_and_in_applied}</div>
+            <div className="stats-container">
+            <h1 className="stats-title">Stats</h1>
+                <div className="banner-container">
+                    <div className="stat-bubble">Total Applications: <b className="banner-number">{data?.total}</b></div>
+                    <div className="stat-bubble">Rejected %: <b className="banner-number">{data?.rejected_percentage.toFixed(2)}</b></div>
+                    <div className="stat-bubble">Interviewing: <b className="banner-number">{data?.interviewing}</b></div>
+                    <div className="stat-bubble">Ghosted: <b className="banner-number">{data?.older_than_30_days_and_in_applied}</b></div>
+                </div>
+                
+            </div>
         </div>
 
     )
