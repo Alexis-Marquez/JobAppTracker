@@ -1,7 +1,7 @@
 import { ResponsiveSankey } from '@nivo/sankey'
 
-const MySankey = ({ data }) => (
-    <ResponsiveSankey /* or Sankey for fixed dimensions */
+export const MySankey = ({ data }) => (
+    <ResponsiveSankey
         data={data}
         margin={{ top: 40, right: 160, bottom: 40, left: 50 }}
         align="justify"

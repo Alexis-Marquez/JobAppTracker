@@ -4,6 +4,7 @@ import { ApplicationsFilters } from "@/types/api";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import { useApplicationsStatusQuery } from "@/features/applications/api/get_stats";
 import "./insightsHome.css"
+import { MySankey } from "../landingPage/components/sankey";
 
 export function InsightsPageHome(){
      const [filters, setFilters] = useState<ApplicationsFilters>({
@@ -27,7 +28,9 @@ export function InsightsPageHome(){
                     <div className="stat-bubble">Interviewing: <b className="banner-number">{data?.interviewing}</b></div>
                     <div className="stat-bubble">Ghosted: <b className="banner-number">{data?.older_than_30_days_and_in_applied}</b></div>
                 </div>
-                
+                <div className="sankey-container" style={{ height: "400px" }}>
+                     {data?.sankey_data && <MySankey data={data.sankey_data} />}
+                </div>
             </div>
         </div>
 
