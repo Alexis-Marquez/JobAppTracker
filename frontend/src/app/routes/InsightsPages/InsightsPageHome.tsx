@@ -21,7 +21,6 @@ export function InsightsPageHome(){
         <div className="container-page">
             <Navbar></Navbar>
             <div className="stats-container">
-            <h1 className="stats-title">Stats</h1>
                 <div className="banner-container">
                     <div className="stat-bubble">Total Applications: <b className="banner-number">{data?.total}</b></div>
                     <div className="stat-bubble">Rejected %: <b className="banner-number">{data?.rejected_percentage.toFixed(2)}</b></div>

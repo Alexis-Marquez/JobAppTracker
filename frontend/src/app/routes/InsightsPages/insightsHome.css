@@ -5,6 +5,7 @@ stats-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
 }
 .stats-title {
     font-size: 2rem;
