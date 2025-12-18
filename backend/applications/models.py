@@ -111,16 +111,33 @@ class Application(models.Model):
         is_new = self.pk is None
 
         if not is_new:
-            old_status = Application.objects.get(pk=self.pk).status
+            previous = Application.objects.get(pk=self.pk)
+            old_status = previous.status
 
-            if old_status != self.status:
-                allowed = self.ALLOWED_STATUS_TRANSITIONS.get(old_status, set())
-                if self.status not in allowed:
-                    raise ValueError(
-                        f"Invalid status transition: {old_status} → {self.status}"
-                    )
+            # Validate allowed transitions
+            allowed = self.ALLOWED_STATUS_TRANSITIONS.get(old_status, set())
+            if old_status != self.status and self.status not in allowed:
+                raise ValueError(f"Invalid status transition: {old_status} → {self.status}")
+        else:
+            old_status = None
 
         super().save(*args, **kwargs)
+
+        # Create history entry AFTER saving
+        if is_new:
+            ApplicationStatusHistory.objects.create(
+                application=self,
+                old_status=None,
+                new_status=self.status
+            )
+        else:
+            if old_status != self.status:
+                ApplicationStatusHistory.objects.create(
+                    application=self,
+                    old_status=old_status,
+                    new_status=self.status
+                )
+
 
 
 
