@@ -77,3 +77,25 @@ export type ApplicationsFilters = {
     page?: number;
     search?: string;
 };
+
+type SankeyNode = { id: string };
+type SankeyLink = { source: string; target: string; value: number };
+
+type SankeyData = {
+  nodes: SankeyNode[];
+  links: SankeyLink[];
+};
+
+
+export type ApplicationsStats = {
+    total: number;
+    rejected_percentage: number;
+    interviewing: number;
+    older_than_30_days_and_in_applied: number;
+    sankey_data: SankeyData;
+}
+
+// "total": total,
+//         "rejected_percentage": rejected / total * 100 if total else 0,
+//         "interviewing": interviewing,
+//         "older_than_30_days_and_in_applied": older_than_30,
