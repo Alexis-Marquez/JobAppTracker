@@ -164,3 +164,4 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://capable-cendol-41ac88.netlify.app",
 ]
+CORS_ALLOW_CREDENTIALS = True
