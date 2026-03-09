@@ -3,7 +3,7 @@ import { useUpdateApplicationStatus } from "@/features/applications/api/update_a
 import "./StatusButton.css"
 import {capitalizeFirstLetter} from "@/lib/functions/helperFuncs"
 
-const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted","failed_interview"] as const;
+const STATUS_OPTIONS = ["applied", "interviewing", "offered", "rejected", "withdrawn", "accepted"] as const;
 const statusColors: Record<string, string> = {
     applied: "#9ebcf3",
     interviewing: "#f4cc8c",
@@ -11,7 +11,6 @@ const statusColors: Record<string, string> = {
     rejected: "#e89c9c",
     withdrawn: "#838383",
     accepted: "#bbf3a8",
-    failed_interview: "#f3a8a8",
 };
 
 export function StatusButton({ id, currentStatus }: { id: number; currentStatus: string }) {
@@ -46,7 +45,7 @@ export function StatusButton({ id, currentStatus }: { id: number; currentStatus:
                         >
                             {STATUS_OPTIONS.map((status) => (
                                 <option key={status} value={status} style={{backgroundColor: "var(--color-white)", color:"var(--color-primary-dark"}}>
-                                    {status}
+                                    {capitalizeFirstLetter(status)}
                                 </option>
                             ))}
                         </select>

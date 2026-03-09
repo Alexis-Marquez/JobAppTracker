@@ -55,6 +55,18 @@ class Application(models.Model):
         WITHDRAWN = 'withdrawn', 'Withdrawn'
         ACCEPTED = 'accepted', 'Accepted'
         ARCHIVED = 'archived', 'Archived'
+    
+    
+    ALLOWED_STATUS_TRANSITIONS = {
+    "applied": {"interviewing", "rejected", "ghosted", "withdrawn"},
+    "interviewing": {"offer", "rejected", "withdrawn", "ghosted"},
+    "offered": {"accepted", "rejected", "withdrawn"},
+    "rejected": set(),
+    "ghosted": set(),
+    "withdrawn": set(),
+    "accepted": set(),
+    "archived": set(),
+}
 
     objects = ApplicationManager()
     application_date = models.DateTimeField("date applied")
@@ -93,26 +105,40 @@ class Application(models.Model):
 
     def has_offer(self):
         return self.status == self.ApplicationStatus.OFFERED
+    
+    
     def save(self, *args, **kwargs):
         is_new = self.pk is None
-        old_status = None
+
         if not is_new:
-            old_status = Application.objects.get(pk=self.pk).status
+            previous = Application.objects.get(pk=self.pk)
+            old_status = previous.status
+
+            # Validate allowed transitions
+            allowed = self.ALLOWED_STATUS_TRANSITIONS.get(old_status, set())
+            if old_status != self.status and self.status not in allowed:
+                raise ValueError(f"Invalid status transition: {old_status} → {self.status}")
+        else:
+            old_status = None
 
         super().save(*args, **kwargs)
 
+        # Create history entry AFTER saving
         if is_new:
             ApplicationStatusHistory.objects.create(
                 application=self,
                 old_status=None,
                 new_status=self.status
             )
-        elif old_status != self.status:
-            ApplicationStatusHistory.objects.create(
-                application=self,
-                old_status=old_status,
-                new_status=self.status
-            )
+        else:
+            if old_status != self.status:
+                ApplicationStatusHistory.objects.create(
+                    application=self,
+                    old_status=old_status,
+                    new_status=self.status
+                )
+
+
 
 
 
