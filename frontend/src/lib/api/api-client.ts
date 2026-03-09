@@ -6,7 +6,8 @@ import { queryClient } from "@/lib/react-query-client";
 
 export const api = Axios.create({
     // @ts-ignore
-    baseURL: import.meta.env.VITE_API_URL
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true
 });
 
 
@@ -40,13 +41,13 @@ api.interceptors.response.use(
 
             console.log(error.request?.responseURL);
             originalRequest._retry = true;
-            sessionStorage.removeItem('accessToken');
             console.log(originalRequest);
             try {
                 const refreshResponse:RefreshTokenResponse = await refreshToken();
                 const newAccessToken = refreshResponse.access;
                 sessionStorage.setItem('accessToken', newAccessToken);
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                sessionStorage.removeItem('accessToken');
                 const result = await api(originalRequest);
                 return result;
 
