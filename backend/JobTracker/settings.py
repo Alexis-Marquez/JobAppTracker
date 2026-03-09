@@ -162,5 +162,5 @@ ALLOWED_HOSTS = [os.environ.get('RENDER_EXTERNAL_HOSTNAME', 'localhost'), '127.0
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://capable-cendol-41ac88.netlify.app/",
+    "https://capable-cendol-41ac88.netlify.app",
 ]
