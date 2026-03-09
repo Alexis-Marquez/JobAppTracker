@@ -29,6 +29,22 @@ class ApplicationManager(models.Manager):
     def for_user(self, user):
         return self.filter(user=user)
 
+class ApplicationStatusHistory(models.Model):
+    application = models.ForeignKey(
+        'Application',
+        on_delete=models.CASCADE,
+        related_name='history'
+    )
+    old_status = models.CharField(max_length=20, blank=True, null=True)
+    new_status = models.CharField(max_length=20)
+    changed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['changed_at']
+
+    def __str__(self):
+        return f"{self.application} changed to {self.new_status} on {self.changed_at}"
+
 
 class Application(models.Model):
     class ApplicationStatus(models.TextChoices):
@@ -39,16 +55,29 @@ class Application(models.Model):
         WITHDRAWN = 'withdrawn', 'Withdrawn'
         ACCEPTED = 'accepted', 'Accepted'
         ARCHIVED = 'archived', 'Archived'
+    
+    
+    ALLOWED_STATUS_TRANSITIONS = {
+    "applied": {"interviewing", "rejected", "ghosted", "withdrawn"},
+    "interviewing": {"offer", "rejected", "withdrawn", "ghosted"},
+    "offered": {"accepted", "rejected", "withdrawn"},
+    "rejected": set(),
+    "ghosted": set(),
+    "withdrawn": set(),
+    "accepted": set(),
+    "archived": set(),
+}
 
     objects = ApplicationManager()
     application_date = models.DateTimeField("date applied")
-    benefits = models.TextField(blank=True)
+    benefits = models.TextField(blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     pay = models.CharField(max_length=100, blank=True)
     position_title = models.CharField(max_length=200)
+    posting_url = models.URLField(blank=True, null=True, max_length=500)
     resume_used = models.ForeignKey(Resume, on_delete=models.SET_NULL, null=True, blank=True)
     requirements = models.TextField(blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='applications')
@@ -57,6 +86,9 @@ class Application(models.Model):
         choices=ApplicationStatus.choices,
         default=ApplicationStatus.APPLIED
     )
+
+    class Meta:
+        ordering = ['-application_date']
 
     def __str__(self):
         return f"{self.position_title} at {self.company} ({self.status})"
@@ -91,6 +123,7 @@ class Application(models.Model):
 
         super().save(*args, **kwargs)
 
+        # Create history entry AFTER saving
         if is_new:
             ApplicationStatusHistory.objects.create(
                 application=self,

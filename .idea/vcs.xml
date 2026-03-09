@@ -2,7 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/jenkins_home/caches/git-d886bc68b9bf4916bf1bc2db7de623ba" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/jenkins_home/workspace/JobTracker-CI" vcs="Git" />
   </component>
 </project>

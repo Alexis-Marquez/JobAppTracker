@@ -1,0 +1,77 @@
+/* Simple Search bar styles using project color variables from `src/app/index.css` */
+
+.searchbar-container {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	width: 100%;
+	max-width: 680px;
+	margin: 0.5rem 0;
+}
+
+.searchbar-input {
+	flex: 1 1 auto;
+	padding: 0.6rem 0.75rem;
+	border-radius: 8px;
+	border: 1px solid var(--color-primary-dark);
+	background: var(--color-white);
+	color: var(--color-primary-dark);
+	font-family: inherit;
+	font-size: 0.95rem;
+	transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.searchbar-input::placeholder {
+	color: rgba(0, 0, 0, 0.45);
+}
+
+.searchbar-input:focus {
+	outline: none;
+	border-color: var(--color-accent);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.searchbar-button {
+	padding: 0.55rem 0.85rem;
+	border-radius: 8px;
+	border: 1px solid var(--color-accent);
+	background-color: var(--color-accent);
+	color: var(--color-primary-dark);
+	font-weight: 600;
+	cursor: pointer;
+	transition: transform 0.12s ease, opacity 0.12s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.searchbar-button:hover {
+	transform: translateY(-1px);
+	opacity: 0.95;
+}
+
+.searchbar-icon {
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+}
+
+.searchbar-button-text {
+	line-height: 1;
+}
+
+.searchbar-help {
+	font-size: 0.85rem;
+	color: var(--color-primary-dark);
+	margin-top: 0.25rem;
+}
+
+@media (max-width: 520px) {
+	.searchbar-container {
+		gap: 0.4rem;
+	}
+	.searchbar-button {
+		padding: 0.45rem 0.6rem;
+	}
+}
+

@@ -1,41 +1,71 @@
-import Axios, { InternalAxiosRequestConfig } from 'axios';
+import Axios from 'axios';
 
-import { env } from '@/config/env';
-import {paths} from "@/config/paths.ts";
-
-function authRequestInterceptor(config: InternalAxiosRequestConfig) {
-    if (config.headers) {
-        config.headers.Accept = 'application/json';
-    }
-
-    config.withCredentials = true;
-    return config;
-}
+import { refreshToken} from "@/lib/auth";
+import {RefreshTokenResponse} from "@/types/api";
+import { queryClient } from "@/lib/react-query-client";
 
 export const api = Axios.create({
-    baseURL: env.API_URL,
+    // @ts-ignore
+    baseURL: import.meta.env.VITE_API_URL
 });
 
-api.interceptors.request.use(authRequestInterceptor);
+
+export const apiLogout = async ()=>{
+    await api.post('logout/')
+}
+
+
+
+api.interceptors.request.use((config) => {
+    config.headers.Accept = 'application/json';
+    config.withCredentials = true;
+
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+
+
+api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            if (error.request?.responseURL?.includes('/token/refresh/') || error.request?.responseURL?.includes('/token')) {
+                return Promise.reject(error);
+            }
+
+            console.log(error.request?.responseURL);
+            originalRequest._retry = true;
+            sessionStorage.removeItem('accessToken');
+            console.log(originalRequest);
+            try {
+                const refreshResponse:RefreshTokenResponse = await refreshToken();
+                const newAccessToken = refreshResponse.access;
+                sessionStorage.setItem('accessToken', newAccessToken);
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                const result = await api(originalRequest);
+                return result;
+
+            } catch (refreshError: any) {
+                await apiLogout();
+                sessionStorage.removeItem('accessToken');
+                window.location.href = '/login/';
+                return Promise.reject(refreshError);
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 api.interceptors.response.use(
     (response: { data: any; }) => {
         return response.data;
     },
     (error: { response: { data: { message: string; }; status: number; }; message: string; }) => {
-        const message = error.response?.data?.message || error.message;
-        // useNotifications.getState().addNotification({
-        //     type: 'error',
-        //     title: 'Error',
-        //     message,
-        // });
-
-        if (error.response?.status === 401) {
-            const searchParams = new URLSearchParams();
-            const redirectTo =
-                searchParams.get('redirectTo') || window.location.pathname;
-                window.location.href = paths.auth.login.getHref(redirectTo);
-        }
-
         return Promise.reject(error);
     },
 );

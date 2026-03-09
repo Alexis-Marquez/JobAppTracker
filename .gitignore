@@ -4,3 +4,7 @@
 .env
 docker-compose.override.yml
 db.sqlite3
+node_modules
+__pycache__/
+*.py[cod]
+*$py.class

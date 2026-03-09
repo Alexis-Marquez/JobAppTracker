@@ -1,7 +1,12 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
-from applications.views import ApplicationViewSet
+from applications.views import ApplicationStatsView, ApplicationViewSet
 
 router = DefaultRouter()
-router.register(r'applications', ApplicationViewSet)
+router.register(r'applications', ApplicationViewSet, basename='application')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('applications/stats/', ApplicationStatsView.as_view(), name='application-stats'),
+]
+
+urlpatterns += router.urls

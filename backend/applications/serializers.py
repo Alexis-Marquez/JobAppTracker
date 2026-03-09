@@ -1,6 +1,6 @@
 from django.utils import timezone
 from rest_framework import serializers
-from applications.models import Application
+from applications.models import Application, ApplicationStatusHistory
 from companies.models import Company
 from companies.serializers import CompanySerializer
 from locations.models import Location
@@ -9,11 +9,18 @@ from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
 
 
+class ApplicationStatusHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApplicationStatusHistory
+        fields = ['old_status', 'new_status', 'changed_at']
+
+
 class ApplicationSerializer(serializers.ModelSerializer):
     company = CompanySerializer(read_only=True)
     location = LocationSerializer(read_only=True)
     resume_used = ResumeSerializer(read_only=True)
-
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    history = ApplicationStatusHistorySerializer(many=True, read_only=True)
     company_data = serializers.JSONField(write_only=True, required=False)
     # FORMAT
     # {
@@ -45,6 +52,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
     def get_is_active(self, obj):
         return obj.is_active()
 
+
     def get_days_since_applied(self, obj):
         return obj.days_since_applied()
 
@@ -68,6 +76,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
+        request = self.context.get('request')
+        if not request:
+            raise serializers.ValidationError("Request context missing.")
         company_data = validated_data.pop('company_data', None)
         location_data = validated_data.pop('location_data', None)
         application_date = validated_data.get('application_date')
@@ -83,4 +94,5 @@ class ApplicationSerializer(serializers.ModelSerializer):
             location_obj, _ = Location.objects.get_or_create(**location_data)
             validated_data['location'] = location_obj
 
+        validated_data['user'] = request.user
         return super().create(validated_data)
