@@ -35,12 +35,12 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         if (error.response?.status === 401 && !originalRequest._retry) {
-            if (error.request?.responseURL?.includes('/token/refresh/') || error.request?.responseURL?.includes('/token')) {
+            if (error.config.url?.includes('/token/refresh/')) {
                 return Promise.reject(error);
             }
 
             console.log(error.request?.responseURL);
-            originalRequest._retry = true;
+            (originalRequest as any)._retry = true;
             console.log(originalRequest);
             try {
                 const refreshResponse:RefreshTokenResponse = await refreshToken();
