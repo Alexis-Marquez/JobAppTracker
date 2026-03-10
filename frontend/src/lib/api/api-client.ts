@@ -35,9 +35,9 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         if (error.response?.status === 401 && !originalRequest._retry) {
-            if (error.config.url?.includes('/token/refresh/')) {
-                return Promise.reject(error);
-            }
+            if (originalRequest.url?.includes('token/refresh')) {
+    return Promise.reject(error);
+}
 
             console.log(error.request?.responseURL);
             (originalRequest as any)._retry = true;
@@ -47,7 +47,6 @@ api.interceptors.response.use(
                 const newAccessToken = refreshResponse.access;
                 sessionStorage.setItem('accessToken', newAccessToken);
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                sessionStorage.removeItem('accessToken');
                 const result = await api(originalRequest);
                 return result;
 
