@@ -32,19 +32,21 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    env_file:
+      - .env
     volumes:
     - ./backend:/code
 
-  frontend:
-    build:
-      context: ./frontend
-      args:
-        VITE_API_URL: "/api"
-    ports:
-      - "80:80"
-    depends_on:
-      web:
-        condition: service_healthy
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     args:
+  #       VITE_API_URL: "/api"
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     web:
+  #       condition: service_healthy
 
 
 #  jenkins:
