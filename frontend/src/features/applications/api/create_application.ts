@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import {api} from "@/lib/api/api-client";
+import {api} from "@/lib/api/api";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {getApplicationsQueryOptions} from "@/features/applications/api/get_applications";
 import {Application} from "@/types/api";

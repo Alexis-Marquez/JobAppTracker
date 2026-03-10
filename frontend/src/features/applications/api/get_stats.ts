@@ -1,4 +1,4 @@
-import { api } from '@/lib/api/api-client';
+import { api } from '@/lib/api/api';
 import { ApplicationsFilters, ApplicationsStats } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 

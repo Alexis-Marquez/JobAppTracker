@@ -1,4 +1,4 @@
-import { api } from "@/lib/api/api-client";
+import { api } from "@/lib/api/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type UpdateStatusInput = {
