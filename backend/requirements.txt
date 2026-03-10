@@ -5,3 +5,5 @@ djangorestframework
 drf-nested-routers
 djangorestframework-simplejwt
 gunicorn
+dj-database-url
+django-cors-headers

@@ -54,9 +54,9 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 key="refresh_token",
                 value=refresh_token,
                 httponly=True,
-                secure=False,   # True in production with HTTPS
-                samesite='Lax',
-                path='/api/token/refresh/'
+                secure=True,
+                samesite="None",
+                path='/'
             )
         response.data.pop("refresh", None)
 
