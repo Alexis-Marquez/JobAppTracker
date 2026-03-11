@@ -89,7 +89,7 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
 };
 
 import {Navigate, useLocation} from "react-router";
-import {api, apiLogout} from "@/lib/api/api-client";
+import {api, apiLogout} from "@/lib/api/api";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
 

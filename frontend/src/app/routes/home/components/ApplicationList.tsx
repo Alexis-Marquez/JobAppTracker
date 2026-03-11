@@ -34,7 +34,7 @@ export const ApplicationList= ()=>{
                 >
                     <option value="">All Job Applications</option>
                     <option value="applied">Applied</option>
-                    <option value="interview">Interviewing</option>
+                    <option value="interviewing">Interviewing</option>
                     <option value="offer">Offers</option>
                     <option value="rejected">Rejected</option>
                     <option value="failed_interview">Failed Interview</option>

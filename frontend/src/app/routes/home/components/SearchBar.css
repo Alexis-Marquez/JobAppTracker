@@ -69,6 +69,7 @@
 @media (max-width: 520px) {
 	.searchbar-container {
 		gap: 0.4rem;
+		flex-direction: column;
 	}
 	.searchbar-button {
 		padding: 0.45rem 0.6rem;

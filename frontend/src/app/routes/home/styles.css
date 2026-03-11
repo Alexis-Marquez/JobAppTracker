@@ -135,6 +135,11 @@ button:focus-visible {
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
 }
 
+.application-buttons{
+    display: flex;
+    gap: 0.5rem;
+}
+
 /* Base hidden state */
 .detailed-view-animated {
     overflow: hidden;
@@ -152,4 +157,22 @@ button:focus-visible {
     max-height: 1000px;
     opacity: 1;
     transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .application-list-content {
+        flex-direction: column;
+    }
+    .application-list-item-section {
+        width: 100%;
+    }
+    .application-buttons{
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    .application-button{
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+    }
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDeleteApplication } from "@/features/applications/api/delete_application";
 import { ConfirmDeleteModal } from "@/components/ConfirmDeleteModal";
 import {Application} from "@/types/api";
+import "../styles.css"
 type Props = {
     app_id: number;
 };
@@ -17,7 +18,7 @@ export const DeleteApplicationButton = ({app_id}: Props) => {
 
     return (
         <>
-            <button className="delete-button" onClick={() => setShowModal(true)}>
+            <button className="application-button" onClick={() => setShowModal(true)}>
                 🗑️
             </button>
 
