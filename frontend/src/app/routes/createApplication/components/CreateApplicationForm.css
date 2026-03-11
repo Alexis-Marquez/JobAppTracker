@@ -1,90 +1,155 @@
 .form-container {
-    max-width: 600px;
-    margin: 3rem auto;
-    padding: 3rem;
-    background-color: var(--color-white);
-    color: var(--color-primary-dark);
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+  background: #ffffff;
+  max-width: 760px;
+  padding: 48px 56px;
+  border-radius: 16px;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.06),
+    0 2px 8px rgba(0,0,0,0.04);
+  margin: 3rem auto;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: 14px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--color-primary-dark);
+label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  text-align: right;
 }
-.form-group input,
-.form-group select,
-.form-group textarea {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.75rem;
-    font-size: 1rem;
-    background-color: var(--color-white);
-    color: var(--color-primary-dark);
-    border: 1px solid var(--color-primary-light);
-    border-radius: 8px;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+input,
+select {
+  width: 100%;
+  padding: 13px 14px;
+  background: #fafafa;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  transition: all 0.18s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    background-color: #f5f8ff;
-    border-color: var(--color-accent);
+input:hover,
+select:hover {
+  border-color: #cbd5f5;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+  background: #ffffff;
 }
 
 .error-message {
-    margin-top: 0.25rem;
-    color: var(--color-danger);
-    font-size: 0.875rem;
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 2px;
+}
+
+.button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .submit-button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    width: 30%;
+  background: linear-gradient(135deg,#10b981,#059669);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all .2s ease;
 }
 
 .submit-button:hover {
-    background-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16,185,129,.25);
 }
 
-.submit-button:disabled {
-    background-color: var(--color-primary-light);
-    cursor: not-allowed;
+.submit-button:active {
+  transform: translateY(0px);
 }
-
 .form-section {
-    max-width: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px;
+  margin-bottom: 18px;
 }
 .form-section .form-group {
     flex: 1;
     min-width: 0;
 }
-.button-container{
-    width: 100%;
+.form-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 35px;
+  color: #0f172a;
+  text-align: center;
+}
+.form-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #10b981;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+.location-grid input{
+  width: auto;
+}
+
+.location-grid .form-group {
+  grid-template-columns: 1fr;
+}
+
+.location-grid label {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 20px;
+    margin: 10px auto;
+  }
+
+  .form-section {
+    display: flex; 
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .form-group {
     display: flex;
-    justify-content: center;
+    flex-direction: column; 
+    align-items: flex-start; 
+    width: 100%;
+  }
+
+  input, select, .form-group input, .form-group select {
+    width: 100% !important; 
+    box-sizing: border-box; 
+  }
+
+  .form-group label {
+    margin-bottom: 5px;
+    text-align: left;
+  }
 }
