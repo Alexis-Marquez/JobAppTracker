@@ -52,28 +52,29 @@ export const CreateApplicationForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="form-container">
+            <h2 className="form-title">New Application</h2>
             <div className="form-section">
                 <div className="form-group">
-                    <label>Position Title</label>
-                    <input type="text" {...register("position_title")} />
+                    <label htmlFor="position_title">Position Title</label>
+                    <input type="text" id="position_title" {...register("position_title")} />
                     {errors.position_title && <p className="error-message">{errors.position_title.message}</p>}
                 </div>
                 <div className="form-group">
-                    <label>Posting Url</label>
-                    <input type="url" {...register("posting_url")} />
+                    <label htmlFor="posting_url">Posting Url</label>
+                    <input type="url" id="posting_url" {...register("posting_url")} />
                     {errors.posting_url && <p className="error-message">{errors.posting_url.message}</p>}
                 </div>
             </div>
             <div className="form-section">
                 <div className="form-group">
-                    <label>Company Name</label>
-                    <input type="text" {...register("company_data.name")}/>
+                    <label htmlFor="company_name">Company Name</label>
+                    <input type="text" id="company_name" {...register("company_data.name")}/>
                     {errors.company_data?.name && <p className="error-message">{errors.company_data.name.message}</p>}
                 </div>
                 
                 <div className="form-group">
-                    <label>Location Type</label>
-                    <select {...register("location_data.location_type")} className="border p-2 w-full">
+                    <label htmlFor="location_type">Location Type</label>
+                    <select id="location_type" {...register("location_data.location_type")} className="border p-2 w-full">
                         <option value="ONSITE">Onsite</option>
                         <option value="REMOTE">Remote</option>
                         <option value="HYBRID">Hybrid</option>
@@ -81,34 +82,34 @@ export const CreateApplicationForm = () => {
                 </div>
             </div>
             {locationType !== "REMOTE" && (
-                <div className="form-section">
+                <div className="form-section location-grid">
                     <div className="form-group">
-                        <label>City</label>
-                        <input type="text" {...register("location_data.city")}/>
+                        <label htmlFor="city">City</label>
+                        <input type="text" id="city" {...register("location_data.city")}/>
                         {errors.location_data?.city && <p className="error-message">{errors.location_data.city.message}</p>}
                     </div>
 
                     <div className="form-group">
-                        <label>State</label>
-                        <input type="text" {...register("location_data.state")} />
+                        <label htmlFor="state">State</label>
+                        <input type="text" id="state" {...register("location_data.state")} />
                     </div>
 
                     <div className="form-group">
-                        <label>Country</label>
-                        <input type="text" {...register("location_data.country")} />
+                        <label htmlFor="country">Country</label>
+                        <input type="text" id="country" {...register("location_data.country")} />
                     </div>
                 </div>
             )}
             <div className="form-section">
                 <div className="form-group">
-                    <label>Application Date</label>
-                    <input type="date" {...register("application_date", { valueAsDate: true })}/>
+                    <label htmlFor="application_date">Application Date</label>
+                    <input type="date" id="application_date" {...register("application_date", { valueAsDate: true })}/>
                     {errors.application_date && <p className="error-message">{errors.application_date.message}</p>}
                 </div>
 
                 <div className="form-group">
-                    <label>Status</label>
-                    <select {...register("status")}>
+                    <label htmlFor="status">Status</label>
+                    <select id="status" {...register("status")}>
                         <option value="applied">Applied</option>
                         <option value="interviewing">Interview</option>
                         <option value="offered">Offer</option>
