@@ -1,37 +1,55 @@
-import { useState } from "react";
-import { Navbar } from "../home/components/Navbar";
-import { ApplicationsFilters } from "@/types/api";
-import FullScreenLoader from "@/components/FullScreenLoader";
 import { useApplicationsStatusQuery } from "@/features/applications/api/get_stats";
-import "./insightsHome.css"
+import { Navbar } from "../home/components/Navbar";
 import { MySankey } from "../landingPage/components/sankey";
+import FullScreenLoader from "@/components/FullScreenLoader";
+import { ApplicationsFilters } from "@/types/api";
+import { useState } from "react";
+import "./InsightsHome.css";
 
-export function InsightsPageHome(){
-     const [filters, setFilters] = useState<ApplicationsFilters>({
-            status: undefined,
-            search: undefined,
-        });
-    
-        const { data, isLoading, isError } = useApplicationsStatusQuery(filters);
+export function InsightsPageHome() {
+  const [filters] = useState<ApplicationsFilters>({
+    status: undefined,
+    search: undefined,
+  });
 
-        if (isLoading) return <FullScreenLoader></FullScreenLoader>;
+  const { data, isLoading } = useApplicationsStatusQuery(filters);
 
+  if (isLoading) return <FullScreenLoader />;
 
-    return(
-        <div className="container-page">
-            <Navbar></Navbar>
-            <div className="stats-container">
-                <div className="banner-container">
-                    <div className="stat-bubble">Total Applications: <b className="banner-number">{data?.total}</b></div>
-                    <div className="stat-bubble">Rejected %: <b className="banner-number">{data?.rejected_percentage.toFixed(2)}</b></div>
-                    <div className="stat-bubble">Interviewing: <b className="banner-number">{data?.interviewing}</b></div>
-                    <div className="stat-bubble">Ghosted: <b className="banner-number">{data?.older_than_30_days_and_in_applied}</b></div>
-                </div>
-                <div className="sankey-container" style={{ height: "400px" }}>
-                     {data?.sankey_data && <MySankey data={data.sankey_data} />}
-                </div>
-            </div>
+  return (
+    <div className="container-page">
+      <Navbar />
+      <main className="insights-content">
+        <header className="insights-header">
+          <h1>Application Insights</h1>
+        </header>
+
+        <div className="stats-grid">
+          <div className="stat-card total">
+            <span>Total Applications</span>
+            <b className="stat-number">{data?.total}</b>
+          </div>
+          <div className="stat-card rejected">
+            <span>Rejected Rate</span>
+            <b className="stat-number">{data?.rejected_percentage.toFixed(1)}%</b>
+          </div>
+          <div className="stat-card interviewing">
+            <span>Interviewing</span>
+            <b className="stat-number">{data?.interviewing}</b>
+          </div>
+          <div className="stat-card ghosted">
+            <span>Ghosted</span>
+            <b className="stat-number">{data?.older_than_30_days_and_in_applied}</b>
+          </div>
         </div>
 
-    )
+        <section className="chart-section">
+          <h3>Application Pipeline Flow</h3>
+          <div className="sankey-wrapper">
+            {data?.sankey_data && <MySankey data={data.sankey_data} />}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
