@@ -8,6 +8,7 @@ import {LandingPage} from "@/app/routes/landingPage/LandingPage";
 import { queryClient } from "@/lib/react-query-client";
 import {CreateApplicationPage} from "@/app/routes/createApplication/CreateApplicationPage";
 import { InsightsPageHome } from './routes/InsightsPages/InsightsPageHome';
+import { About } from '@/app/routes/about/About';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/login" element={<LandingPage />} />
                     <Route path="/insights" element={<InsightsPageHome />} />
                     <Route path="/create" element={<CreateApplicationPage/>}/>
+                    <Route path="/about" element={<About />} />
                 </Routes>
                 </AuthProvider>
                 </BrowserRouter>
