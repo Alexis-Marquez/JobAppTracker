@@ -4,7 +4,7 @@ import { MySankey } from "../landingPage/components/sankey";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import { ApplicationsFilters } from "@/types/api";
 import { useState } from "react";
-import "./InsightsHome.css";
+import "./insightsHome.css";
 
 export function InsightsPageHome() {
   const [filters] = useState<ApplicationsFilters>({
