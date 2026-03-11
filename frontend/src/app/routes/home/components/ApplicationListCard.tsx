@@ -39,8 +39,10 @@ export function ApplicationListCard ({app}: Props){
                     <div className="application-company-name">{app.company.name}</div>
                     <div className="application-location">{app.location.location_type}</div>
                 </section>
-                <button className="edit-button">✎</button>
-                <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
+                <div className="application-buttons">
+                    <button className="application-button">✎</button>
+                    <DeleteApplicationButton app_id={app.id}></DeleteApplicationButton>
+                </div>
             </div>
             <div className="application-footer">
                 <button className="detailed-view" onClick={toggleDetail}>
