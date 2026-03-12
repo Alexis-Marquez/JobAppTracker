@@ -137,6 +137,12 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+# Tell Django to trust the X-Forwarded-Proto header from Render's proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Ensure cookies are only sent over HTTPS in production
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
