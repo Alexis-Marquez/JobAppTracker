@@ -3,9 +3,14 @@ import {AuthContextType, AuthResponse, User} from "@/types/api";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {RefreshTokenResponse} from "@/types/api"
 
-const getUser = async (): Promise<User> => {
-    const response = await api.get('/users/');
-    return response.data;
+const getUser = async (): Promise<User | null> => {
+    try {
+        const response = await api.get('/users/');
+        return response.data || null; 
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null; 
+    }
 };
 
 export const loginInputSchema = z.object({
@@ -73,13 +78,15 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
     });
 
     const logout = async () => {
+    try {
+        await queryClient.cancelQueries();
         await apiLogout();
+    } finally {
         sessionStorage.removeItem("accessToken");
-        queryClient.invalidateQueries({ queryKey: ["currentUser"] });
         queryClient.clear();
-    };
+    }
+};
     const user: User | null = data ?? null;
-
     return (
         <AuthContext.Provider value={{user, logout }}>
             {isFetching && <FullScreenLoader />}
@@ -99,7 +106,7 @@ export const ProtectedRoute = ({ children }: AuthProviderProps) => {
 
     if (!user) {
         // If not authenticated, redirect to login page
-        return <Navigate to="/login/" replace />;
+        return <Navigate to="/login" replace />;
     }
     // If authenticated, render the child route component
     return children;

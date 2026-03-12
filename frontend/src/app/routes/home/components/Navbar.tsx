@@ -11,6 +11,7 @@ export const Navbar = () => {
                 <NavLink className="navbar-link" to="/" end>Home</NavLink>
                 <NavLink className="navbar-link" to="/insights">Stats</NavLink>
                 <NavLink className="navbar-link" to="/about">About</NavLink>
+                <NavLink className="logout-button" to="/logout">Logout</NavLink>
             </div>
         </nav>
     );
