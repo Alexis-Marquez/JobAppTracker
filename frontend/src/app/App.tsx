@@ -9,6 +9,8 @@ import { queryClient } from "@/lib/react-query-client";
 import {CreateApplicationPage} from "@/app/routes/createApplication/CreateApplicationPage";
 import { InsightsPageHome } from './routes/InsightsPages/InsightsPageHome';
 import { About } from '@/app/routes/about/About';
+import { R } from '@tanstack/react-query-devtools/build/legacy/ReactQueryDevtools-Cn7cKi7o';
+import { Logout } from './routes/logout/Logout';
 
 function App() {
     return (
@@ -22,6 +24,7 @@ function App() {
                     <Route path="/insights" element={<InsightsPageHome />} />
                     <Route path="/create" element={<CreateApplicationPage/>}/>
                     <Route path="/about" element={<About />} />
+                    <Route path="/logout" element={<Logout />} />
                 </Routes>
                 </AuthProvider>
                 </BrowserRouter>

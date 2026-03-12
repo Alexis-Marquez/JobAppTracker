@@ -46,8 +46,6 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
-
-        # Extract refresh token from response data
         refresh_token = response.data.get("refresh")
         if refresh_token:
             response.set_cookie(
@@ -55,8 +53,9 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 value=refresh_token,
                 httponly=True,
                 secure=True,
-                samesite="None",
-                path='/'
+
+                path='/',
+                domain=None
             )
         response.data.pop("refresh", None)
 
@@ -72,6 +71,7 @@ class CookieTokenRefreshView(APIView):
 
         try:
             refresh = RefreshToken(refresh_token)
+            refresh.check_blacklist()
             access_token = str(refresh.access_token)
 
             return Response({"access": access_token}, status=status.HTTP_200_OK)
@@ -82,22 +82,29 @@ class CookieTokenRefreshView(APIView):
 class LogoutView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
+        print("!!! LOGOUT VIEW HIT !!!")
         try:
             refresh_token = request.COOKIES.get('refresh_token')
-
+            print(f"Attempting logout with refresh token: {refresh_token}")
             if refresh_token:
                 try:
                     token = RefreshToken(refresh_token)
-                    token.blacklist()
                 except Exception:
-                    pass
+                    print("Failed to blacklist token, it may already be invalid or expired.")
+
             response = Response({"detail": "Logged out successfully."}, status=status.HTTP_200_OK)
-            response.delete_cookie('refresh_token')
+            
+            response.delete_cookie(
+                'refresh_token',
+                path='/',
+                samesite=None
+            )
+                        
             return response
 
         except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
+            print(f"LOGOUT ERROR: {str(e)}")
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 def health_check(request):
     """A simple view that returns a 200 OK response."""

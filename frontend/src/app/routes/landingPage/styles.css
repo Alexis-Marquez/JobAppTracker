@@ -77,6 +77,13 @@
 .sub-title a:hover {
     text-decoration: underline;
 }
+.container-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--color-background);
+}
 
 @media (max-width: 480px) {
     .title {

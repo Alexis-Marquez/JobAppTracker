@@ -26,6 +26,7 @@ export function Login() {
         });
     };
     return (
+        <div className="container-form">
         <form onSubmit={handleSubmit(onSubmit)} className="log-in-form">
             <div className="log-in-form-section">
             <h2 className="title">Login</h2>
@@ -52,6 +53,7 @@ export function Login() {
                 <p className="sub-title">Don't have an account? <a>register</a></p>
             </div>
         </form>
+        </div>
             )
 }
 
