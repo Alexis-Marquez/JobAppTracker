@@ -125,6 +125,9 @@ export const CreateApplicationForm = () => {
                 <button type="submit" disabled={isPending} className="submit-button">
                     {isPending ? "Submitting..." : "Create Application"}
                 </button>
+                <button type="button" onClick={() => navigate("/")} className="cancel-button">
+                    Cancel
+                </button>
             </div>
         </form>
     );

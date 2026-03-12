@@ -81,6 +81,27 @@ select:focus {
 .submit-button:active {
   transform: translateY(0px);
 }
+
+.cancel-button{
+  background: #e5e7eb;
+  color: #374151;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: all .2s ease;
+}
+.cancel-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(229,231,235,.25);
+}
+.cancel-button:active {
+  background: #9ca3af;
+  transform: translateY(0px);
+}
 .form-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
