@@ -11,7 +11,7 @@ import { InsightsPageHome } from './routes/InsightsPages/InsightsPageHome';
 import { About } from '@/app/routes/about/About';
 import { R } from '@tanstack/react-query-devtools/build/legacy/ReactQueryDevtools-Cn7cKi7o';
 import { Logout } from './routes/logout/Logout';
-import LandingPage from './routes/LandingPage/LandingPage';
+import {LandingPage} from '@/app/routes/LandingPage/LandingPage';
 
 function App() {
     return (
