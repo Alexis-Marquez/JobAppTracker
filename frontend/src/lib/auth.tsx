@@ -42,7 +42,7 @@ export const useLoginWithUsernameAndPassword = () => {
             sessionStorage.setItem('accessToken', data.access);
             queryClient.invalidateQueries({ queryKey: ['currentUser'] });
             queryClient.invalidateQueries({ queryKey: ['applications'] });
-            window.location.href = '/';
+            window.location.href = '/Home';
         }
     });
 }
