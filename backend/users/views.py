@@ -52,8 +52,8 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 key="refresh_token",
                 value=refresh_token,
                 httponly=True,
-                secure=True,
-                samesite=None,
+                secure='True',
+                samesite='None',
                 path='/',
                 domain=None
             )
