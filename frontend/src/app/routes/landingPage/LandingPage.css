@@ -184,5 +184,12 @@
         width: 100%;
         max-width: 400px;
     }
+    .footer-container{
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer{
+      padding: 0;
+    }
     
 }
