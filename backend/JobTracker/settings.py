@@ -173,7 +173,3 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 SESSION_COOKIE_SAMESITE = 'None'
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://jobbtrack.netlify.app",
-]
