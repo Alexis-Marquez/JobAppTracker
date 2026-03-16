@@ -34,9 +34,7 @@ function App() {
                         } />
                         {/* <Route path="/signup" element={<Signup />} /> */}
                         <Route path="/logout" element={
-                            <PublicRoute>
                                 <Logout />
-                            </PublicRoute>
                         } />
                         {/* PROTECTED */}
                         <Route
