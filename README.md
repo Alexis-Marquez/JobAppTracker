@@ -29,6 +29,10 @@ Built with **React**, **Django**, and **PostgreSQL**, and fully containerized wi
 
 ## Getting Started
 
+### Deployed instance at: https://jobbtrack.netlify.app/
+
+## For Local Instance:
+
 ### **Prerequisites**
 - Docker  
 - Docker Compose  
