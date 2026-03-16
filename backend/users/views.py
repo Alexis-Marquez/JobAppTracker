@@ -53,7 +53,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 value=refresh_token,
                 httponly=True,
                 secure=True,
-
+                samesite=None,
                 path='/',
                 domain=None
             )
@@ -97,7 +97,7 @@ class LogoutView(APIView):
             response.delete_cookie(
                 'refresh_token',
                 path='/',
-                samesite=None
+                samesite='None'
             )
                         
             return response

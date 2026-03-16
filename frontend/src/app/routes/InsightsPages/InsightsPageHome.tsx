@@ -1,6 +1,6 @@
 import { useApplicationsStatusQuery } from "@/features/applications/api/get_stats";
 import { Navbar } from "../home/components/Navbar";
-import { MySankey } from "../landingPage/components/sankey";
+import { MySankey } from "./components/sankey";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import { ApplicationsFilters } from "@/types/api";
 import { useState } from "react";
