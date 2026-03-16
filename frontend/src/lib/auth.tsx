@@ -6,7 +6,8 @@ import {RefreshTokenResponse} from "@/types/api"
 const getUser = async (): Promise<User | null> => {
     try {
         const response = await api.get('/users/');
-        return response.data || null; 
+        console.log("API Response Data:", response);
+        return response || null; 
     } catch (error) {
         console.error("Error fetching user data:", error);
         return null; 
@@ -33,7 +34,10 @@ const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResponse> =
     return api.post('/token/', data);
 };
 
+
+
 export const useLoginWithUsernameAndPassword = () => {
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: loginWithUsernameAndPassword,
@@ -42,7 +46,7 @@ export const useLoginWithUsernameAndPassword = () => {
             sessionStorage.setItem('accessToken', data.access);
             queryClient.invalidateQueries({ queryKey: ['currentUser'] });
             queryClient.invalidateQueries({ queryKey: ['applications'] });
-            window.location.href = '/Home';
+            navigate('/home');
         }
     });
 }
@@ -69,12 +73,11 @@ type ProtectedRouteProps = {
 export const AuthProvider = ({children}: ProtectedRouteProps) => {
     const queryClient = useQueryClient();
     const location = useLocation();
-    const { data, isFetching } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["currentUser"],
         queryFn: getUser,
-        enabled: location.pathname !== "/login/",
+        enabled: !!sessionStorage.getItem("accessToken"),
         retry: false,
-        staleTime: 30 * 60 * 1000,
     });
 
     const logout = async () => {
@@ -88,26 +91,44 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
 };
     const user: User | null = data ?? null;
     return (
-        <AuthContext.Provider value={{user, logout }}>
-            {isFetching && <FullScreenLoader />}
+        <AuthContext.Provider value={{user, logout, isLoading}}>
+            {isLoading && <FullScreenLoader />}
             {children}
         </AuthContext.Provider>
     );
 };
 
-import {Navigate, useLocation} from "react-router";
+import {Navigate, useLocation, useNavigate} from "react-router";
 import {api, apiLogout} from "@/lib/api/api";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
 
 
-export const ProtectedRoute = ({ children }: AuthProviderProps) => {
-    const { user } = useAuth();
-
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+    const { user, isLoading } = useAuth();
+    const token = sessionStorage.getItem("accessToken");
+    console.log("ProtectedRoute: user =", user, "isLoading =", isLoading, "token =", token);
+    if (token && (isLoading || !user)) {
+        return <FullScreenLoader />;
+    }
     if (!user) {
-        // If not authenticated, redirect to login page
         return <Navigate to="/" replace />;
     }
-    // If authenticated, render the child route component
+
+    return children;
+};
+
+export const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+    const { user, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <FullScreenLoader />;
+    }
+
+    // If the user is logged in, send them to home
+    if (user) {
+        return <Navigate to="/home" replace />;
+    }
+
     return children;
 };

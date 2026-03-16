@@ -1,7 +1,7 @@
 import './App.css'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {BrowserRouter, Route, Routes} from "react-router";
-import {AuthProvider} from "@/lib/auth";
+import {AuthProvider, ProtectedRoute, PublicRoute} from "@/lib/auth";
 import {Login} from "@/app/routes/Login/Login";
 import {Home} from "@/app/routes/home/Home";
 import {LoginPage} from "@/app/routes/Login/LoginPage";
@@ -19,18 +19,53 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <BrowserRouter>
                 <AuthProvider>
-                <Routes>
-                    <Route path="/Home" element={<Home />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/insights" element={<InsightsPageHome />} />
-                    <Route path="/create" element={<CreateApplicationPage/>}/>
-                    <Route path="/about" element={<About />} />
-                    <Route path="/logout" element={<Logout />} />
-                </Routes>
-                </AuthProvider>
-                <Routes>
-                    <Route path="/" element={<LandingPage/>} />
-                </Routes>
+                    <Routes>
+
+                        {/* PUBLIC */}
+                        <Route path="/" element={
+                            <PublicRoute>
+                                <LandingPage />
+                            </PublicRoute>
+                        } />
+                        <Route path="/login" element={
+                            <PublicRoute>
+                                <Login />
+                            </PublicRoute>
+                        } />
+                        {/* <Route path="/signup" element={<Signup />} /> */}
+                        <Route path="/logout" element={
+                            <PublicRoute>
+                                <Logout />
+                            </PublicRoute>
+                        } />
+                        {/* PROTECTED */}
+                        <Route
+                        path="/home"
+                        element={
+                            <ProtectedRoute>
+                            <Home />
+                            </ProtectedRoute>
+                        }
+                        />
+
+                        <Route
+                        path="/stats"
+                        element={
+                            <ProtectedRoute>
+                            <InsightsPageHome />
+                            </ProtectedRoute>
+                        }
+                        />
+                        <Route
+                        path="/about"
+                        element={
+                            <ProtectedRoute>
+                            <About />
+                            </ProtectedRoute>
+                        }
+                        />
+                    </Routes>
+                    </AuthProvider>
                 </BrowserRouter>
         </QueryClientProvider>
         </>
