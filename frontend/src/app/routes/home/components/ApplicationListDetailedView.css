@@ -55,11 +55,11 @@
 .timeline-dot.rejected {
     background-color: #E8A0A0;
 }
-.timeline-dot.interview {
-    background-color: #8CE89F;
+.timeline-dot.interviewing {
+    background-color: #FFE08A;
 }
 .timeline-dot.offer {
-    background-color: #FFE08A;
+    background-color: #A0E8A0;
 }
 
 /* Content area */
