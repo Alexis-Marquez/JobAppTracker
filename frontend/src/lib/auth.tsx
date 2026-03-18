@@ -3,11 +3,10 @@ import {AuthContextType, AuthResponse, User} from "@/types/api";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {RefreshTokenResponse} from "@/types/api"
 
-const getUser = async (): Promise<User | null> => {
+export const getUser = async (): Promise<User | null> => {
     try {
-        const response = await api.get('/users/');
-        console.log("API Response Data:", response);
-        return response || null; 
+        const response = await api.get('/users/') as User | null;
+        return response || null;
     } catch (error) {
         console.error("Error fetching user data:", error);
         return null; 
@@ -30,7 +29,7 @@ export const refreshToken: () => Promise<RefreshTokenResponse> = () => {
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 
-const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResponse> => {
+export const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResponse> => {
     return api.post('/token/', data);
 };
 
@@ -92,8 +91,7 @@ export const AuthProvider = ({children}: ProtectedRouteProps) => {
     const user: User | null = data ?? null;
     return (
         <AuthContext.Provider value={{user, logout, isLoading}}>
-            {isLoading && <FullScreenLoader />}
-            {children}
+            {isLoading ? <FullScreenLoader /> : children}
         </AuthContext.Provider>
     );
 };
@@ -102,21 +100,6 @@ import {Navigate, useLocation, useNavigate} from "react-router";
 import {api, apiLogout} from "@/lib/api/api";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
-
-
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-    const { user, isLoading } = useAuth();
-    const token = sessionStorage.getItem("accessToken");
-    console.log("ProtectedRoute: user =", user, "isLoading =", isLoading, "token =", token);
-    if (token && (isLoading || !user)) {
-        return <FullScreenLoader />;
-    }
-    if (!user) {
-        return <Navigate to="/" replace />;
-    }
-
-    return children;
-};
 
 export const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();

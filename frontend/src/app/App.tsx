@@ -1,7 +1,8 @@
 import './App.css'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {BrowserRouter, Route, Routes} from "react-router";
-import {AuthProvider, ProtectedRoute, PublicRoute} from "@/lib/auth";
+import {AuthProvider, PublicRoute} from "@/lib/auth";
+import {ProtectedRoute} from "@/lib/protected-route";
 import {Login} from "@/app/routes/Login/Login";
 import {Home} from "@/app/routes/home/Home";
 import {LoginPage} from "@/app/routes/Login/LoginPage";
