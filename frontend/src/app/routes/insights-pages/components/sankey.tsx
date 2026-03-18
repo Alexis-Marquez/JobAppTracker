@@ -1,6 +1,6 @@
 import { ResponsiveSankey } from '@nivo/sankey'
 
-export const MySankey = ({ data }) => (
+export const MySankey = ({ data }: { data: any }) => (
     <ResponsiveSankey
         data={data}
         label={node => {

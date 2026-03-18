@@ -44,7 +44,7 @@ export function Login() {
             </div>
             {error && (
                 <p className="log-in-error">
-                    {error.response?.data?.message || "Invalid username or password."}
+                    { "Invalid username or password."}
                 </p>)}
             <div className="log-in-form-section">
             <button type="submit" disabled={isPending} className="log-in-button">
