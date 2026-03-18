@@ -1,4 +1,4 @@
-import {Login} from "@/app/routes/Login/Login";
+import {Login} from "@/app/routes/login-page/Login";
 
 export function LoginPage() {
     return (

@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import "../styles.css";
 
 interface ApplicationListProps {
-    data: any; // Replace 'any' with your actual API response type
+    data: any;
     filters: ApplicationsFilters;
     setFilters: React.Dispatch<React.SetStateAction<ApplicationsFilters>>;
 }

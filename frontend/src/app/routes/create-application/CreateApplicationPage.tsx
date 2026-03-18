@@ -1,4 +1,4 @@
-import {CreateApplicationForm} from "@/app/routes/createApplication/components/CreateApplicationForm";
+import {CreateApplicationForm} from "@/app/routes/create-application/components/CreateApplicationForm";
 
 export function CreateApplicationPage(){
     return(

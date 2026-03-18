@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 
 
 
-export const getStats = async (filters: ApplicationsFilters) => {
-    const response = await api.get<ApplicationsStats>('/applications/stats', {
-        params: filters,
-    });
-    return response;
+export const getStats = async (
+  filters: ApplicationsFilters
+): Promise<ApplicationsStats> => {
+  return await api.get<any, ApplicationsStats>(
+    '/applications/stats',
+    { params: filters }
+  );
 };
 
 export const getApplicationsStatsQueryOptions = (filters: ApplicationsFilters) => ({
