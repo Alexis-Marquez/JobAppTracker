@@ -63,6 +63,14 @@ function App() {
                             </ProtectedRoute>
                         }
                         />
+                        <Route
+                        path="/create-application"
+                        element={
+                            <ProtectedRoute>
+                            <CreateApplicationPage />
+                            </ProtectedRoute>
+                        }
+                        />
                     </Routes>
                     </AuthProvider>
                 </BrowserRouter>
