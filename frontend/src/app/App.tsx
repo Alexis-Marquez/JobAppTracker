@@ -64,7 +64,7 @@ function App() {
                         }
                         />
                         <Route
-                        path="/create-application"
+                        path="/create"
                         element={
                             <ProtectedRoute>
                             <CreateApplicationPage />
