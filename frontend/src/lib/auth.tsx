@@ -38,7 +38,7 @@ export const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResp
 export const useLoginWithUsernameAndPassword = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    return useMutation({
+    return useMutation<AuthResponse, AxiosError, LoginInput>({
         mutationFn: loginWithUsernameAndPassword,
         mutationKey: ['currentUser'],
         onSuccess: (data) => {
@@ -110,6 +110,7 @@ import {Navigate, useLocation, useNavigate} from "react-router";
 import {api, apiLogout} from "@/lib/api/api";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
+import { AxiosError } from "axios";
 
 export const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();
