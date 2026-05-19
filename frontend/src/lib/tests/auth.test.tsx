@@ -67,7 +67,8 @@ describe("Auth API Functions", () => {
 
       const result = await loginWithUsernameAndPassword(input);
 
-      expect(api.post).toHaveBeenCalledWith("/token/", input);
+      expect(api.post).toHaveBeenCalledWith("/token/", input, 
+    expect.objectContaining({ timeout: 5000 }));
       expect(result).toEqual(mockResponse);
     });
 
