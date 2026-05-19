@@ -5,7 +5,7 @@ import "./styles.css"
 
 export function Login() {
     const { mutate: login, isPending, isSuccess, error } = useLoginWithUsernameAndPassword();
-
+    const isTimeout = error?.code === 'ECONNABORTED'
     const {
             register,
             handleSubmit,
@@ -44,8 +44,11 @@ export function Login() {
             </div>
             {error && (
                 <p className="log-in-error">
-                    { "Invalid username or password."}
-                </p>)}
+                    {isTimeout 
+                        ? "The server took too long to respond. Please check your connection and try again." 
+                        : "Invalid username or password."}
+                </p>
+            )}
             <div className="log-in-form-section">
             <button type="submit" disabled={isPending} className="log-in-button">
                 {isPending ? "Submitting..." : "Log in"}

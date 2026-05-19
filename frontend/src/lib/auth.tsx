@@ -30,7 +30,7 @@ export const refreshToken: () => Promise<RefreshTokenResponse> = () => {
 export type LoginInput = z.infer<typeof loginInputSchema>;
 
 export const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResponse> => {
-    return api.post('/token/', data);
+    return api.post('/token/', data, {timeout: 3000});
 };
 
 
@@ -38,7 +38,7 @@ export const loginWithUsernameAndPassword = (data: LoginInput): Promise<AuthResp
 export const useLoginWithUsernameAndPassword = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    return useMutation({
+    return useMutation<AuthResponse, AxiosError, LoginInput>({
         mutationFn: loginWithUsernameAndPassword,
         mutationKey: ['currentUser'],
         onSuccess: (data) => {
@@ -46,6 +46,16 @@ export const useLoginWithUsernameAndPassword = () => {
             queryClient.invalidateQueries({ queryKey: ['currentUser'] });
             queryClient.invalidateQueries({ queryKey: ['applications'] });
             navigate('/home');
+        },
+        onError: (error) => {
+            const isTimeout = 
+                error.code === 'ECONNABORTED' 
+
+            if (isTimeout) {
+                console.error("The server took too long to respond.");
+            } else {
+                console.error("Login failed:", error.message);
+            }
         }
     });
 }
@@ -100,6 +110,7 @@ import {Navigate, useLocation, useNavigate} from "react-router";
 import {api, apiLogout} from "@/lib/api/api";
 import {z} from "zod";
 import FullScreenLoader from "@/components/FullScreenLoader";
+import { AxiosError } from "axios";
 
 export const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     const { user, isLoading } = useAuth();
